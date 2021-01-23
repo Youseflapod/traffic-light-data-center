@@ -7,11 +7,11 @@ inSprint = False
 inOverTime = False
 isPastBreakTime = False
 
+isLightEffectRunning = False
+
 isTimeToDisplayBedtime = False
 isWithinBedtimeCountdown = False
 isPastBedtime = False
 isDisplayingBedtime = False
 isDisplayingBedtimeCountdown = False
 isBedtimeSirenProtocolEnabled = False
-
-hasPerformedDailyRecalculation = False

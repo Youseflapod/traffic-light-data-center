@@ -1,7 +1,7 @@
 from global_vars import *
 import time
 from output_controller import *
-import light_effects
+import light_effects as leff
 
 SESSION = 0
 SPRINT = 1
@@ -27,7 +27,7 @@ def start_interruption():
     global inInterruption, startTimes
     inInterruption = True
     startTimes[INTERRUPTION] = time.time()
-    light_effects.start_interruption()
+    leff.start(leff.START_INTERRUPTION)
 
 def end_interruption():
     global inInterruption, interruptionDelay 
@@ -69,7 +69,7 @@ def start_break(breakLength):
     if inSprint:
         end_sprint()
 
-    light_effects.start_break()
+    leff.start(leff.START_BREAK)
     
 
 def start_sprint(sprintLength):
@@ -85,7 +85,7 @@ def start_sprint(sprintLength):
     if inInterruption:
         end_interruption()
 
-    light_effects.start_sprint()
+    leff.start(leff.START_SPRINT)
 
 
 def end_session():
@@ -98,7 +98,7 @@ def end_session():
     if inBreak:
         end_break()
 
-    light_effects.end_session()
+    leff.start(leff.END_SESSION)
 
 
 def update_session_manager():

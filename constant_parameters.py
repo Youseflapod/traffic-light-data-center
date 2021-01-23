@@ -35,7 +35,7 @@ calculatedBedtimeBeforeSunrise = \
     TIME_BEFORE_SUNRISE + FAJR_PRAYER_LENGTH + MORNING_BATHROOM_LENGTH \
     + REQUIRED_AMOUNT_OF_SLEEP + BEDTIME_CLOSING_PRAYERS_LENGTH
 
-DAILY_RECALCULATION_TIME = "1:00 PM"
+DAILY_RECALCULATION_HOUR = 13 # o' clock
 
 city = LocationInfo("London", "England", "Europe/London", 51.5, -0.116)
 s = sun(city.observer, date=datetime.date(2009, 4, 22))

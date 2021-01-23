@@ -1,6 +1,7 @@
 from global_vars import *
 from button_listener import *
 from session_manager import *
+from bedtime_protocol import *
 
 def green_button_clicked():
     start_sprint(STANDARD_SPRINT_LENGTH)
