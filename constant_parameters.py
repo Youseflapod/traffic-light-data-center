@@ -1,5 +1,4 @@
 from astral import LocationInfo
-from astral.sun import sun
 import datetime
 import sys
 import time
@@ -27,22 +26,27 @@ DISPLAY_BEDTIME_LENGTH = 60 * 60
 
 TIME_BEFORE_SUNRISE = 15 * 60
 FAJR_PRAYER_LENGTH = 8 * 60
-MORNING_BATHROOM_LENGTH = 7 * 60
+MORNING_BATHROOM_LENGTH = 8 * 60
+AWAKENING_PERIOD_LENGTH = 7 * 60
 REQUIRED_AMOUNT_OF_SLEEP = 8 * 60 * 60
 BEDTIME_CLOSING_PRAYERS_LENGTH = 15 * 60
 
+calculatedWakeTimeBeforeSunrise = TIME_BEFORE_SUNRISE + FAJR_PRAYER_LENGTH + MORNING_BATHROOM_LENGTH + AWAKENING_PERIOD_LENGTH
+
 calculatedBedtimeBeforeSunrise = \
-    TIME_BEFORE_SUNRISE + FAJR_PRAYER_LENGTH + MORNING_BATHROOM_LENGTH \
+    calculatedWakeTimeBeforeSunrise \
     + REQUIRED_AMOUNT_OF_SLEEP + BEDTIME_CLOSING_PRAYERS_LENGTH
 
-DAILY_RECALCULATION_HOUR = 13 # o' clock
+DAILY_RECALCULATION_HOUR = 13 # o' clock # must be some time around noon!
 
-city = LocationInfo("London", "England", "Europe/London", 51.5, -0.116)
-s = sun(city.observer, date=datetime.date(2009, 4, 22))
+city = LocationInfo("Milton, WV", "United States", "US/Eastern", 38.435060, -82.192510)
 
+MORNING_WAKE_EFFECT_LENGHT = 10 * 60 
 
 SPRINT_L_B = (0, 255, 0, 0.6)
 BREAK_L_B = (255, 234, 0, 0.5)
 INTERRUPTION_L_B = (255, 0, 0, 1)
+
+CLOCK_BRIGHTNESS = 7 # 0 min, max 7
 
 DT = 1.0 / 50

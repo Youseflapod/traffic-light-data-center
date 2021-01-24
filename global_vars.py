@@ -1,4 +1,4 @@
-from constant_parameters import *
+from constant_parameters import * # pylint: disable=unused-wildcard-import
 
 inSession = False
 inInterruption = False
@@ -15,3 +15,7 @@ isPastBedtime = False
 isDisplayingBedtime = False
 isDisplayingBedtimeCountdown = False
 isBedtimeSirenProtocolEnabled = False
+
+sunriseTomorrow = datetime.datetime.now()
+bedtimeTonight = datetime.datetime.now()
+wakeTimeTomorrow = datetime.datetime.now()

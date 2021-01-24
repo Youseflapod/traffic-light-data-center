@@ -1,6 +1,6 @@
-from global_vars import *
+from global_vars import * # pylint: disable=unused-wildcard-import
 import time
-from output_controller import *
+from output_controller import * # pylint: disable=unused-wildcard-import
 import light_effects as leff
 
 SESSION = 0
@@ -35,9 +35,9 @@ def end_interruption():
     interruptionDelay += time.time() - startTimes[INTERRUPTION]
    
     if inBreak:
-        set_light_and_brightness(BREAK_L_B)
+        set_light_and_brightness_override(BREAK_L_B)
     if inSprint:
-        set_light_and_brightness(SPRINT_L_B)
+        set_light_and_brightness_override(SPRINT_L_B)
 
 def just_passed_break_time():
     global isPastBreakTime
@@ -91,6 +91,7 @@ def start_sprint(sprintLength):
 def end_session():
     global inSession
     inSession = False
+    clear_clock()
     if inInterruption:
         end_interruption()
     if inSprint:
@@ -108,25 +109,25 @@ def update_session_manager():
     if inSprint:
         if not inOverTime:
             if not inInterruption:
-                display_min_and_sec(objectiveTimes[SPRINT] + interruptionDelay - currentTime)
+                display_and_format_seconds(objectiveTimes[SPRINT] + interruptionDelay - currentTime)
 
             if currentTime > (objectiveTimes[SPRINT] + interruptionDelay):
                 entering_overtime()
         else:
             if not inInterruption:
-                display_min_and_sec(currentTime - (objectiveTimes[SPRINT] + interruptionDelay))
+                display_and_format_seconds(currentTime - (objectiveTimes[SPRINT] + interruptionDelay))
 
     if inBreak: 
         if not isPastBreakTime: 
             if not inInterruption:
-                display_min_and_sec(objectiveTimes[BREAK] + interruptionDelay - currentTime)
+                display_and_format_seconds(objectiveTimes[BREAK] + interruptionDelay - currentTime)
 
             if currentTime > (objectiveTimes[BREAK] + interruptionDelay):
                 just_passed_break_time()
         else: 
             if not inInterruption:
-                display_min_and_sec(currentTime - (objectiveTimes[SPRINT] + interruptionDelay))
+                display_and_format_seconds(currentTime - (objectiveTimes[SPRINT] + interruptionDelay))
 
 
     if inInterruption:
-        display_min_and_sec(currentTime - startTimes[INTERRUPTION])
+        display_and_format_seconds(currentTime - startTimes[INTERRUPTION])

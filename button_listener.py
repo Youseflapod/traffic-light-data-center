@@ -2,7 +2,7 @@ from pincfg import *
 import time
 import RPi.GPIO as GPIO # pylint: disable=import-error
 import button_logic as bl
-from global_vars import *
+from global_vars import * # pylint: disable=unused-wildcard-import
 
 isGreenPressed = isYellowPressed = isRedPressed = False
 greenTimeHeld = yellowTimeHeld = redTimeHeld = 0

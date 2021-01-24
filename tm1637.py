@@ -4,7 +4,7 @@
 import sys
 import os
 import time
-import RPi.GPIO as IO
+import RPi.GPIO as IO # pylint: disable=import-error
 
 IO.setwarnings(False)
 IO.setmode(IO.BCM)
@@ -26,33 +26,33 @@ class TM1637:
 	__doublePoint = False
 	__Clkpin = 0
 	__Datapin = 0
-	__brightnes = BRIGHT_TYPICAL;
+	__brightness = BRIGHT_TYPICAL;
 	__currentData = [0,0,0,0];
 
-	def __init__( self, pinClock, pinData, brightnes ):
+	def __init__( self, pinClock, pinData, brightness ):
 		self.__Clkpin = pinClock
 		self.__Datapin = pinData
-		self.__brightnes = brightnes;
+		self.__brightness = brightness;
 		IO.setup(self.__Clkpin,OUTPUT)
 		IO.setup(self.__Datapin,OUTPUT)
 	# end  __init__
 
 	def Clear(self):
-		b = self.__brightnes;
+		b = self.__brightness;
 		point = self.__doublePoint;
-		self.__brightnes = 0;
+		self.__brightness = 0;
 		self.__doublePoint = False;
 		data = [0x7F,0x7F,0x7F,0x7F];
 		self.Show(data);
-		self.__brightnes = b;				# restore saved brightnes
+		self.__brightness = b;				# restore saved brightness
 		self.__doublePoint = point;
 	# end  Clear
 
-	def ShowInt(self, i):
+	'''def ShowInt(self, i):
 		s = str(i)
 		self.Clear()
 		for i in range(0,len(s)):
-			self.Show1(i, int(s[i]))
+			self.Show(i, int(s[i]))'''
 
 	def Show( self, data ):
 		for i in range(0,4):
@@ -67,21 +67,21 @@ class TM1637:
 			self.writeByte(self.coding(data[i]));
 		self.stop();
 		self.start();
-		self.writeByte(0x88 + self.__brightnes);
+		self.writeByte(0x88 + self.__brightness);
 		self.stop();
 	# end  Show
 
-	def SetBrightnes(self, brightnes):		# brightnes 0...7
-		if( brightnes > 7 ):
-			brightnes = 7;
-		elif( brightnes < 0 ):
-			brightnes = 0;
+	def SetBrightness(self, brightness):		# brightness 0...7
+		if( brightness > 7 ):
+			brightness = 7;
+		elif( brightness < 0 ):
+			brightness = 0;
 
-		if( self.__brightnes != brightnes):
-			self.__brightnes = brightnes;
+		if( self.__brightness != brightness):
+			self.__brightness = brightness;
 			self.Show(self.__currentData);
 		# end if
-	# end  SetBrightnes
+	# end  SetBrightness
 
 	def ShowDoublepoint(self, on):			# shows or hides the doublepoint
 		if( self.__doublePoint != on):

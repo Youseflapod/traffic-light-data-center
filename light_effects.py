@@ -1,5 +1,6 @@
-from global_vars import *
-from output_controller import *
+from global_vars import * # pylint: disable=unused-wildcard-import
+from output_controller import * # pylint: disable=unused-wildcard-import
+import logging
 from killable_thread import thread_with_trace
 
 END_SESSION = 0
@@ -9,9 +10,16 @@ START_INTERRUPTION = 3
 PAST_BREAK = 4
 ENTERING_OVERTIME = 5
 PAST_BEDTIME = 6
-MORNING = 7
+BEDTIME = 7
+MORNING = 8
+ABORT_BEDTIME_PROTOCOL = 9
+BEDTIME_COUNTDOWN = 10
+DEMO_MODE = 11
 
 currentEffect = -1
+
+def fade(startRGBA, endRGBA, time):
+    pass
 
 def run_light_thread(effect):
     global isLightEffectRunning
@@ -19,26 +27,42 @@ def run_light_thread(effect):
     if effect == END_SESSION:
         set_light_and_brightness((0,0,0,0))
 
-    if effect == START_SPRINT:
+    elif effect == START_SPRINT:
         set_light_and_brightness(SPRINT_L_B)
 
-    if effect == START_BREAK:
+    elif effect == START_BREAK:
         set_light_and_brightness(BREAK_L_B)
 
-    if effect == START_INTERRUPTION:
+    elif effect == START_INTERRUPTION:
         set_light_and_brightness(INTERRUPTION_L_B)
 
-    if effect == PAST_BREAK:
+    elif effect == PAST_BREAK:
         pass
     
-    if effect == ENTERING_OVERTIME:
+    elif effect == ENTERING_OVERTIME:
         pass
 
-    if effect == PAST_BEDTIME:
+    elif effect == PAST_BEDTIME:
         pass
 
-    if effect == MORNING:
+    elif effect == BEDTIME:
         pass
+
+    elif effect == MORNING:
+        pass
+
+    elif effect == ABORT_BEDTIME_PROTOCOL:
+        pass
+
+    elif effect == BEDTIME_COUNTDOWN:
+        set_light_and_brightness((255, 0, 0, 0.5))
+
+    elif effect == DEMO_MODE:
+        pass
+
+    else:
+        logging.error(f'Oops! No such available effect with the value: {effect}' )
+        raise Exception(f'Oops! No such available effect with the value: {effect}')
 
     isLightEffectRunning = False
 
@@ -48,6 +72,7 @@ def kill_effect():
     global light_thread, isLightEffectRunning
     light_thread.kill() 
     light_thread.join()
+    set_light_and_brightness((0,0,0,0))
     isLightEffectRunning = False
 
 def start(effect):

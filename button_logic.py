@@ -1,7 +1,10 @@
-from global_vars import *
-from button_listener import *
-from session_manager import *
-from bedtime_protocol import *
+from global_vars import * # pylint: disable=unused-wildcard-import
+from button_listener import * # pylint: disable=unused-wildcard-import
+from session_manager import * # pylint: disable=unused-wildcard-import
+from bedtime_protocol import * # pylint: disable=unused-wildcard-import
+import light_effects as leff
+
+inDemoMode = False
 
 def green_button_clicked():
     start_sprint(STANDARD_SPRINT_LENGTH)
@@ -33,7 +36,7 @@ def disable_all_button_holds_until_all_released():
     isButtonHoldsEnabled = False
 
 def update_button_logic():
-    global isButtonHoldsEnabled
+    global isButtonHoldsEnabled, inDemoMode
 
     if not isGreenPressed and not isYellowPressed and not isRedPressed:
         isButtonHoldsEnabled = True
@@ -62,5 +65,11 @@ def update_button_logic():
                 abort_bedtime_protocol()
             
             if greenTimeHeld > DEMO_MODE_HOLD_TIME and yellowTimeHeld > DEMO_MODE_HOLD_TIME and redTimeHeld > DEMO_MODE_HOLD_TIME:
+                leff.start(leff.DEMO_MODE)
+                inDemoMode = True
                 print("DEMO MODE")
+
+            if inDemoMode and isOneButtonPressed:
+                leff.kill_effect()
+                inDemoMode = False
 

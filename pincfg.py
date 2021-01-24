@@ -1,11 +1,15 @@
-import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO # pylint: disable=import-error
 
 GREEN_PIN = 20  
-YELLOW_PIN = 20
+BLUE_PIN = 20
 RED_PIN = 20
 
+CLK_PIN = 20
+DIO_PIN = 20
+
+
 GREEN = 0
-YELLOW = 1
+BLUE = 1
 RED = 2
 
 GPIO.setwarnings(False) # Ignore warning for now
