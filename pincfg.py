@@ -1,8 +1,8 @@
 import RPi.GPIO as GPIO # pylint: disable=import-error
 
-RED_LED_PIN = 11
-GREEN_LED_PIN = 15
-BLUE_LED_PIN = 22
+RED_LED_PIN = 17 # USE GPIO Values not PIN Values, bad name...
+GREEN_LED_PIN = 22
+BLUE_LED_PIN = 25
 
 CLK_PIN = 16
 DIO_PIN = 18

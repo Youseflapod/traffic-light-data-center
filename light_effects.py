@@ -25,14 +25,15 @@ def fade(startRGBA, endRGBA, length):
     numberOfFrames = int(length / float(sleepTime))
     differences = tuple(map(lambda i, j: i - j, startRGBA, endRGBA))
     stepSizes = tuple(map(lambda i: i / numberOfFrames, differences))
-    
-    for n in range(numberOfFrames):
+    set_light_and_brightness(startRGBA)
+
+    for n in range(1, numberOfFrames+1):
+        time.sleep(sleepTime)
         deltaRGBA = tuple(map(lambda i: i * n, stepSizes))
         currentRGBA = tuple(map(lambda i, j: i + j, startRGBA, deltaRGBA))
         set_light_and_brightness(currentRGBA)
-        time.sleep(sleepTime)
-        
 
+        
 def run_light_thread():
     global isLightEffectRunning
     effect = currentEffect
