@@ -33,7 +33,7 @@ def fade(startRGBA, endRGBA, length):
         time.sleep(sleepTime)
         
 
-def run_light_thread(effect):
+def run_light_thread():
     global isLightEffectRunning
 
     if effect == END_SESSION:
