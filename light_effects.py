@@ -35,6 +35,7 @@ def fade(startRGBA, endRGBA, length):
 
 def run_light_thread():
     global isLightEffectRunning
+    effect = currentEffect
 
     if effect == END_SESSION:
         set_light_and_brightness((0,0,0,0))
