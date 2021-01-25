@@ -1,0 +1,33 @@
+cd -
+rm -rf traffic-light-data-center/  
+git clone https://github.com/Youseflapod/traffic-light-data-center     
+cd traffic-light-data-center/
+python3 debug_light_effects.py
+
+
+import pigpio 
+pi = pigpio.pi()
+pi.set_PWM_range(17, 1250)
+pi.set_PWM_frequency(17,160)
+pi.set_PWM_dutycycle(17, 1)
+pi.get_PWM_frequency(17)
+
+pi.set_PWM_frequency(17,160)
+pi.get_PWM_real_range(17)
+
+
+
+import pigpio 
+pi = pigpio.pi()
+R = 17
+G = 22
+B = 25
+pi.set_PWM_range(R, 1250)
+pi.set_PWM_frequency(R,160)
+pi.set_PWM_dutycycle(R, 1)
+pi.set_PWM_range(G, 1250)
+pi.set_PWM_frequency(G,160)
+pi.set_PWM_dutycycle(G, 1)
+pi.set_PWM_range(B, 1250)
+pi.set_PWM_frequency(B,160)
+pi.set_PWM_dutycycle(B, 1)

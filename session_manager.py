@@ -35,9 +35,9 @@ def end_interruption():
     interruptionDelay += time.time() - startTimes[INTERRUPTION]
    
     if inBreak:
-        set_light_and_brightness_override(BREAK_L_B)
+        override_light_calib_rgba(BREAK_L_B)
     if inSprint:
-        set_light_and_brightness_override(SPRINT_L_B)
+        override_light_calib_rgba(SPRINT_L_B)
 
 def just_passed_break_time():
     global isPastBreakTime

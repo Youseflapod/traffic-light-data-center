@@ -25,13 +25,13 @@ def fade(startRGBA, endRGBA, length):
     numberOfFrames = int(length / float(sleepTime))
     differences = tuple(map(lambda i, j: i - j, endRGBA, startRGBA))
     stepSizes = tuple(map(lambda i: float(i) / numberOfFrames, differences))
-    set_light_and_brightness(startRGBA)
+    set_light_rgba(startRGBA)
 
     for n in range(1, numberOfFrames+1):
         time.sleep(sleepTime)
         deltaRGBA = tuple(map(lambda i: i * n, stepSizes))
         currentRGBA = tuple(map(lambda i, j: i + j, startRGBA, deltaRGBA))
-        set_light_and_brightness(currentRGBA)
+        set_light_rgba(currentRGBA)
         print(f'{n}: {currentRGBA}')
 
         
@@ -40,16 +40,16 @@ def run_light_thread():
     effect = currentEffect
 
     if effect == END_SESSION:
-        set_light_and_brightness((0,0,0,0))
+        set_light_rgba((0,0,0,0))
 
     elif effect == START_SPRINT:
-        set_light_and_brightness(SPRINT_L_B)
+        set_light_rgba(SPRINT_L_B)
 
     elif effect == START_BREAK:
-        set_light_and_brightness(BREAK_L_B)
+        set_light_rgba(BREAK_L_B)
 
     elif effect == START_INTERRUPTION:
-        set_light_and_brightness(INTERRUPTION_L_B)
+        set_light_rgba(INTERRUPTION_L_B)
 
     elif effect == PAST_BREAK:
         pass
@@ -70,7 +70,7 @@ def run_light_thread():
         pass
 
     elif effect == BEDTIME_COUNTDOWN:
-        set_light_and_brightness((255, 0, 0, 0.5))
+        set_light_rgba((255, 0, 0, 0.5))
 
     elif effect == DEMO_MODE:
         pass
@@ -87,7 +87,7 @@ def kill_effect():
     global light_thread, isLightEffectRunning
     light_thread.kill() 
     light_thread.join()
-    set_light_and_brightness((0,0,0,0))
+    set_light_rgba((0,0,0,0))
     isLightEffectRunning = False
 
 def start(effect):

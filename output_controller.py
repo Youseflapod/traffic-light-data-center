@@ -10,7 +10,15 @@ import datetime
 
 pi = pigpio.pi()
 
-PWM_RANGE = 40000
+PWM_RANGE = 1250
+PWM_FREQUENCY = 160
+pi.set_PWM_frequency(RED_LED_PIN,PWM_FREQUENCY)
+pi.set_PWM_frequency(GREEN_LED_PIN,PWM_FREQUENCY)
+pi.set_PWM_frequency(BLUE_LED_PIN,PWM_FREQUENCY)
+
+MAX_GREEN = 140
+MAX_BLUE = MAX_GREEN * 0.8
+
 pi.set_PWM_range(RED_LED_PIN, PWM_RANGE)
 pi.set_PWM_range(GREEN_LED_PIN, PWM_RANGE)
 pi.set_PWM_range(BLUE_LED_PIN, PWM_RANGE)
@@ -22,6 +30,7 @@ clockDisplay.SetBrightness(CLOCK_BRIGHTNESS)
 shouldDisplayBeClear = True
 isDisplayActuallyClear = True
 currentlySetFourNumbers = [0,0,0,0]
+currentlyDisplayedLight = (0,0,0,0)
 
 def set_pin_light(pin, value, brightness):
     if value > 255 or brightness > 1:
@@ -30,18 +39,26 @@ def set_pin_light(pin, value, brightness):
     if value < 0 or brightness < 0:
         logging.error(f'Too dim!! My eyes? Can\'t set pin {pin} to {value} with brightness {brightness}')
         raise Exception(f'Too dim!! My eyes? Can\'t set pin {pin} to {value} with brightness {brightness}')
-    realBrightness = int(PWM_RANGE * (value * float(brightness)) / 255.0)
+    realBrightness = int(round(PWM_RANGE * (value * float(brightness)) / 255.0))
     pi.set_PWM_dutycycle(pin, realBrightness)
 
-def set_light_and_brightness(rgba_tuple):
+def set_light_rgba(rgba_tuple):
+    global currentlyDisplayedLight
     r,g,b,a = rgba_tuple
+    currentlyDisplayedLight = rgba_tuple
     set_pin_light(RED_LED_PIN, r, a)
     set_pin_light(GREEN_LED_PIN, g, a)
     set_pin_light(BLUE_LED_PIN, b, a)
 
-def set_light_and_brightness_override(rgba_tuple):
+def set_light_calib_rgba(rgba_tuple):
+    r,g,b,a = rgba_tuple
+    g = g * MAX_GREEN/255.0
+    b = b * MAX_BLUE/255.0
+    set_light_rgba((r,g,b,a))
+
+def override_light_calib_rgba(rgba_tuple):
     light_effects.kill_effect()
-    set_light_and_brightness(rgba_tuple)
+    set_light_rgba(rgba_tuple)
 
 
 def update_clock_thread(): 
