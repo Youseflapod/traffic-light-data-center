@@ -4,6 +4,7 @@ import bedtime_protocol
 import session_manager
 import light_effects
 import output_controller
+import debug_light_effects
 from global_vars import * # pylint: disable=unused-wildcard-import
 
 import logging
@@ -31,7 +32,8 @@ def main():
 
         time.sleep(DT)
 
-try:
-    main()
-except Exception as e:
-    logging.error("Main thread exception occurred", exc_info=True)
+if not debug_light_effects.DEBUG:
+    try:
+        main()
+    except Exception as e:
+        logging.error("Main thread exception occurred", exc_info=True)

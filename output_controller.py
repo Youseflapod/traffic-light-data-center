@@ -3,17 +3,17 @@ import logging
 import light_effects
 import RPi.GPIO # pylint: disable=import-error
 import pigpio # pylint: disable=import-error
-from pincfg import *
+from pincfg import *  # pylint: disable=unused-wildcard-import
 import tm1637
 import time
 import datetime
 
 pi = pigpio.pi()
 
-range = 40000
-pi.set_PWM_range(RED_PIN, range)
-pi.set_PWM_range(GREEN_PIN, range)
-pi.set_PWM_range(BLUE_PIN, range)
+PWM_RANGE = 40000
+pi.set_PWM_range(RED_LED_PIN, PWM_RANGE)
+pi.set_PWM_range(GREEN_LED_PIN, PWM_RANGE)
+pi.set_PWM_range(BLUE_LED_PIN, PWM_RANGE)
 
 clockDisplay = tm1637.TM1637(CLK_PIN, DIO_PIN, tm1637.BRIGHT_TYPICAL)
 clockDisplay.Clear()
@@ -30,14 +30,14 @@ def set_pin_light(pin, value, brightness):
     if value < 0 or brightness < 0:
         logging.error(f'Too dim!! My eyes? Can\'t set pin {pin} to {value} with brightness {brightness}')
         raise Exception(f'Too dim!! My eyes? Can\'t set pin {pin} to {value} with brightness {brightness}')
-    realBrightness = int(range * (value * float(brightness)) / 255.0)
+    realBrightness = int(PWM_RANGE * (value * float(brightness)) / 255.0)
     pi.set_PWM_dutycycle(pin, realBrightness)
 
 def set_light_and_brightness(rgba_tuple):
     r,g,b,a = rgba_tuple
-    set_pin_light(RED_PIN, r, a)
-    set_pin_light(GREEN_PIN, g, a)
-    set_pin_light(BLUE_PIN, b, a)
+    set_pin_light(RED_LED_PIN, r, a)
+    set_pin_light(GREEN_LED_PIN, g, a)
+    set_pin_light(BLUE_LED_PIN, b, a)
 
 def set_light_and_brightness_override(rgba_tuple):
     light_effects.kill_effect()

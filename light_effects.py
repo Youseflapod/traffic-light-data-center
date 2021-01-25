@@ -1,4 +1,4 @@
-from global_vars import * # pylint: disable=unused-wildcard-import
+import global_vars as gv # pylint: disable=unused-wildcard-import
 from output_controller import * # pylint: disable=unused-wildcard-import
 import logging
 from killable_thread import thread_with_trace
@@ -18,8 +18,20 @@ DEMO_MODE = 11
 
 currentEffect = -1
 
-def fade(startRGBA, endRGBA, time):
-    pass
+FADE_FPS = 50
+
+def fade(startRGBA, endRGBA, length):
+    sleepTime = 1.0 / FADE_FPS
+    numberOfFrames = int(length / float(sleepTime))
+    differences = tuple(map(lambda i, j: i - j, startRGBA, endRGBA))
+    stepSizes = tuple(map(lambda i: i / numberOfFrames, differences))
+    
+    for n in range(numberOfFrames):
+        deltaRGBA = tuple(map(lambda i: i * n, stepSizes))
+        currentRGBA = tuple(map(lambda i, j: i + j, startRGBA, deltaRGBA))
+        set_light_and_brightness(currentRGBA)
+        time.sleep(sleepTime)
+        
 
 def run_light_thread(effect):
     global isLightEffectRunning
@@ -46,7 +58,7 @@ def run_light_thread(effect):
         pass
 
     elif effect == BEDTIME:
-        pass
+        fade((255,255,0,1),(0,0,0,0), 5)
 
     elif effect == MORNING:
         pass

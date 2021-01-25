@@ -26,26 +26,26 @@ class TM1637:
 	__doublePoint = False
 	__Clkpin = 0
 	__Datapin = 0
-	__brightness = BRIGHT_TYPICAL;
-	__currentData = [0,0,0,0];
+	__brightness = BRIGHT_TYPICAL
+	__currentData = [0,0,0,0]
 
 	def __init__( self, pinClock, pinData, brightness ):
 		self.__Clkpin = pinClock
 		self.__Datapin = pinData
-		self.__brightness = brightness;
+		self.__brightness = brightness
 		IO.setup(self.__Clkpin,OUTPUT)
 		IO.setup(self.__Datapin,OUTPUT)
 	# end  __init__
 
 	def Clear(self):
-		b = self.__brightness;
-		point = self.__doublePoint;
-		self.__brightness = 0;
-		self.__doublePoint = False;
-		data = [0x7F,0x7F,0x7F,0x7F];
-		self.Show(data);
-		self.__brightness = b;				# restore saved brightness
-		self.__doublePoint = point;
+		b = self.__brightness
+		point = self.__doublePoint
+		self.__brightness = 0
+		self.__doublePoint = False
+		data = [0x7F,0x7F,0x7F,0x7F]
+		self.Show(data)
+		self.__brightness = b				# restore saved brightness
+		self.__doublePoint = point
 	# end  Clear
 
 	'''def ShowInt(self, i):
@@ -56,37 +56,37 @@ class TM1637:
 
 	def Show( self, data ):
 		for i in range(0,4):
-			self.__currentData[i] = data[i];
+			self.__currentData[i] = data[i]
 
-		self.start();
-		self.writeByte(ADDR_AUTO);
-		self.stop();
-		self.start();
-		self.writeByte(STARTADDR);
+		self.start()
+		self.writeByte(ADDR_AUTO)
+		self.stop()
+		self.start()
+		self.writeByte(STARTADDR)
 		for i in range(0,4):
-			self.writeByte(self.coding(data[i]));
-		self.stop();
-		self.start();
-		self.writeByte(0x88 + self.__brightness);
-		self.stop();
+			self.writeByte(self.coding(data[i]))
+		self.stop()
+		self.start()
+		self.writeByte(0x88 + self.__brightness)
+		self.stop()
 	# end  Show
 
 	def SetBrightness(self, brightness):		# brightness 0...7
 		if( brightness > 7 ):
-			brightness = 7;
+			brightness = 7
 		elif( brightness < 0 ):
-			brightness = 0;
+			brightness = 0
 
 		if( self.__brightness != brightness):
-			self.__brightness = brightness;
-			self.Show(self.__currentData);
+			self.__brightness = brightness
+			self.Show(self.__currentData)
 		# end if
 	# end  SetBrightness
 
 	def ShowDoublepoint(self, on):			# shows or hides the doublepoint
 		if( self.__doublePoint != on):
-			self.__doublePoint = on;
-			self.Show(self.__currentData);
+			self.__doublePoint = on
+			self.Show(self.__currentData)
 		# end if
 	# end  ShowDoublepoint
 
@@ -136,12 +136,12 @@ class TM1637:
 		if( self.__doublePoint ):
 			pointData = 0x80
 		else:
-			pointData = 0;
+			pointData = 0
 
 		if(data == 0x7F):
 			data = 0
 		else:
-			data = HexDigits[data] + pointData;
+			data = HexDigits[data] + pointData
 		return data
 	# end coding
 

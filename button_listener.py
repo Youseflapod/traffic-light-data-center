@@ -1,8 +1,9 @@
-from pincfg import *
+from pincfg import * # pylint: disable=unused-wildcard-import
 import time
 import RPi.GPIO as GPIO # pylint: disable=import-error
 import button_logic as bl
 from global_vars import * # pylint: disable=unused-wildcard-import
+import debug_light_effects
 
 isGreenPressed = isYellowPressed = isRedPressed = False
 greenTimeHeld = yellowTimeHeld = redTimeHeld = 0
@@ -61,21 +62,22 @@ def gpio_red_button_released(channel):
     global flickeringTimers
     flickeringTimers[RED] = FLICKERING_TOLERANCE
 
-GPIO.add_event_detect(GREEN_PIN,GPIO.RISING,callback=gpio_green_button_pressed) 
-GPIO.add_event_detect(GREEN_PIN,GPIO.FALLING,callback=gpio_green_button_released)
+if not debug_light_effects.DEBUG:
+    GPIO.add_event_detect(GREEN_BUTTON_PIN,GPIO.RISING,callback=gpio_green_button_pressed) 
+    GPIO.add_event_detect(GREEN_BUTTON_PIN,GPIO.FALLING,callback=gpio_green_button_released)
 
-GPIO.add_event_detect(YELLOW_PIN,GPIO.RISING,callback=gpio_yellow_button_pressed) 
-GPIO.add_event_detect(YELLOW_PIN,GPIO.FALLING,callback=gpio_yellow_button_released)
+    GPIO.add_event_detect(YELLOW_BUTTON_PIN,GPIO.RISING,callback=gpio_yellow_button_pressed) 
+    GPIO.add_event_detect(YELLOW_BUTTON_PIN,GPIO.FALLING,callback=gpio_yellow_button_released)
 
-GPIO.add_event_detect(RED_PIN,GPIO.RISING,callback=gpio_red_button_pressed) 
-GPIO.add_event_detect(RED_PIN,GPIO.FALLING,callback=gpio_red_button_released)
+    GPIO.add_event_detect(RED_BUTTON_PIN,GPIO.RISING,callback=gpio_red_button_pressed) 
+    GPIO.add_event_detect(RED_BUTTON_PIN,GPIO.FALLING,callback=gpio_red_button_released)
 
 def listen_to_the_buttons():
     global flickeringTimers, startTime
     global isGreenPressed, isYellowPressed, isRedPressed
     global greenTimeHeld, yellowTimeHeld, redTimeHeld
 
-    if not GPIO.input(GREEN_PIN) == GPIO.HIGH:
+    if not GPIO.input(GREEN_BUTTON_PIN) == GPIO.HIGH:
         if isGreenPressed:
             flickeringTimers[GREEN] -= DT
             if flickeringTimers[GREEN] <= 0:
@@ -87,7 +89,7 @@ def listen_to_the_buttons():
 
 
 
-    if not GPIO.input(YELLOW_PIN) == GPIO.HIGH:
+    if not GPIO.input(YELLOW_BUTTON_PIN) == GPIO.HIGH:
         if isYellowPressed:
             flickeringTimers[YELLOW] -= DT
             if flickeringTimers[YELLOW] <= 0:
@@ -99,7 +101,7 @@ def listen_to_the_buttons():
     
     
 
-    if not GPIO.input(RED_PIN) == GPIO.HIGH:
+    if not GPIO.input(RED_BUTTON_PIN) == GPIO.HIGH:
         if isRedPressed:
             flickeringTimers[RED] -= DT
             if flickeringTimers[RED] <= 0:
