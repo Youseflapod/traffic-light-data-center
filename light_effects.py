@@ -24,7 +24,7 @@ def fade(startRGBA, endRGBA, length):
     sleepTime = 1.0 / FADE_FPS
     numberOfFrames = int(length / float(sleepTime))
     differences = tuple(map(lambda i, j: i - j, endRGBA, startRGBA))
-    stepSizes = tuple(map(lambda i: i / numberOfFrames, differences))
+    stepSizes = tuple(map(lambda i: float(i) / numberOfFrames, differences))
     set_light_and_brightness(startRGBA)
 
     for n in range(1, numberOfFrames+1):
