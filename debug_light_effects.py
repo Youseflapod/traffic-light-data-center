@@ -6,7 +6,7 @@ DEBUG = True
 
 effect = leff.BEDTIME
 
-def debug_press():
+def debug_press(channel):
     leff.start(effect)
 
 if DEBUG: 

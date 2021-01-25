@@ -113,7 +113,7 @@ def should_bedtime_protocol_continue():
         return True
 
 def calculate_sunrise_of_tomorrow_and_bedtime():
-    global hasPerformedDailyRecalculation, sunriseTomorrow, bedtimeTonight
+    global hasPerformedDailyRecalculation, sunriseTomorrow, bedtimeTonight, wakeTimeTomorrow
     global showBedtimeTime, showBedtimeCountdownTime
     tomorrow = datetime.datetime.today() + timedelta(days=1)
     s = sun(city.observer, date=tomorrow.date(), tzinfo=city.timezone)
