@@ -14,4 +14,4 @@ if DEBUG:
 
 while True:
     print("Debugging...") 
-    time.sleep(1.4)
+    time.sleep(15)

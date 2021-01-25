@@ -89,6 +89,7 @@ def kill_effect():
     isLightEffectRunning = False
 
 def start(effect):
+    print(f'Light effect - {effect} started!')
     global isLightEffectRunning, light_thread, currentEffect
     currentEffect = effect
 
@@ -96,6 +97,7 @@ def start(effect):
         kill_effect()
         
     isLightEffectRunning = True
+    light_thread = thread_with_trace(target= run_light_thread)
     light_thread.start()
 
 
