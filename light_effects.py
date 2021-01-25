@@ -23,7 +23,7 @@ FADE_FPS = 50
 def fade(startRGBA, endRGBA, length):
     sleepTime = 1.0 / FADE_FPS
     numberOfFrames = int(length / float(sleepTime))
-    differences = tuple(map(lambda i, j: i - j, startRGBA, endRGBA))
+    differences = tuple(map(lambda i, j: i - j, endRGBA, startRGBA))
     stepSizes = tuple(map(lambda i: i / numberOfFrames, differences))
     set_light_and_brightness(startRGBA)
 
@@ -60,7 +60,7 @@ def run_light_thread():
         pass
 
     elif effect == BEDTIME:
-        fade((255,255,0,1),(0,0,0,0), 5)
+        fade((255,234,0,1),(0,0,0,0), 5)
 
     elif effect == MORNING:
         pass
