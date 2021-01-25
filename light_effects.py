@@ -32,7 +32,7 @@ def fade(startRGBA, endRGBA, length):
         deltaRGBA = tuple(map(lambda i: i * n, stepSizes))
         currentRGBA = tuple(map(lambda i, j: i + j, startRGBA, deltaRGBA))
         set_light_and_brightness(currentRGBA)
-        print(currentRGBA)
+        print(f'{n}: {currentRGBA}')
 
         
 def run_light_thread():
@@ -61,7 +61,7 @@ def run_light_thread():
         pass
 
     elif effect == BEDTIME:
-        fade((255,150,0,1),(0,0,0,0), 5)
+        fade((255,120,0,1),(255,120,0,0), 5)
 
     elif effect == MORNING:
         pass
