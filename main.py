@@ -43,3 +43,4 @@ if not debug_light_effects.DEBUG:
         main()
     except Exception as e:
         logging.error("Main thread exception occurred", exc_info=True)
+        raise Exception(e)
