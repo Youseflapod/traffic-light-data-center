@@ -2,7 +2,7 @@ import light_effects as leff
 from pincfg import * # pylint: disable=unused-wildcard-import
 import time
 
-DEBUG = True
+DEBUG = False
 
 currEffect = 0
 
