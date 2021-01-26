@@ -24,7 +24,8 @@ FADE_FPS = 144
 SLEEP_TIME = 1.0 / FADE_FPS
 EXP_FINAL_SLOPE = 0.025
 
-def fade_linear(startRGBA, endRGBA, length):
+def fade_linear(endRGBA, length):
+    startRGBA = get_currently_displayed_light()
     numberOfFrames = int(length / float(SLEEP_TIME))
     differences = tuple(map(lambda i, j: i - j, endRGBA, startRGBA))
     stepSizes = tuple(map(lambda i: float(i) / numberOfFrames, differences))
@@ -44,7 +45,6 @@ def fade_off(length):
     b = EXP_FINAL_SLOPE
     C = alpha
     a = -1 * (1/T) * np.log(b / (C + b) )
-    print(f'a = {a}')
     for n in range(1, numberOfFrames+1):
         time.sleep(SLEEP_TIME)
         t = n * SLEEP_TIME
@@ -78,8 +78,9 @@ def run_light_thread():
         pass
 
     elif effect == BEDTIME:
-        set_light_calib_rgba((255,255,255,1))
-        fade_off(5)
+        y = c.BREAK_L_B
+        set_light_calib_rgba((y(0),y(1),y(2),1))
+        fade_off(10)
 
     elif effect == MORNING:
         pass
@@ -109,7 +110,6 @@ def kill_effect():
     isLightEffectRunning = False
 
 def start(effect):
-    print(f'Light effect - {effect} started!')
     global isLightEffectRunning, light_thread, currentEffect
     currentEffect = effect
 

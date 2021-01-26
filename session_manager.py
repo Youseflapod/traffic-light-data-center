@@ -1,6 +1,6 @@
 import constant_parameters as c
 import time
-from output_controller import * # pylint: disable=unused-wildcard-import
+import output_controller as oc # pylint: disable=unused-wildcard-import
 import light_effects as leff
 
 SESSION = 0
@@ -42,9 +42,9 @@ def end_interruption():
     interruptionDelay += time.time() - startTimes[INTERRUPTION]
    
     if inBreak:
-        override_light_calib_rgba(c.BREAK_L_B)
+        oc.override_light_calib_rgba(c.BREAK_L_B)
     if inSprint:
-        override_light_calib_rgba(c.SPRINT_L_B)
+        oc.override_light_calib_rgba(c.SPRINT_L_B)
 
 def just_passed_break_time():
     global isPastBreakTime
@@ -98,7 +98,7 @@ def start_sprint(sprintLength):
 def end_session():
     global inSession
     inSession = False
-    clear_clock()
+    oc.clear_clock()
     if inInterruption:
         end_interruption()
     if inSprint:
@@ -116,25 +116,25 @@ def update_session_manager():
     if inSprint:
         if not inOverTime:
             if not inInterruption:
-                display_and_format_seconds(objectiveTimes[SPRINT] + interruptionDelay - currentTime)
+                oc.display_and_format_seconds(objectiveTimes[SPRINT] + interruptionDelay - currentTime)
 
             if currentTime > (objectiveTimes[SPRINT] + interruptionDelay):
                 entering_overtime()
         else:
             if not inInterruption:
-                display_and_format_seconds(currentTime - (objectiveTimes[SPRINT] + interruptionDelay))
+                oc.display_and_format_seconds(currentTime - (objectiveTimes[SPRINT] + interruptionDelay))
 
     if inBreak: 
         if not isPastBreakTime: 
             if not inInterruption:
-                display_and_format_seconds(objectiveTimes[BREAK] + interruptionDelay - currentTime)
+                oc.display_and_format_seconds(objectiveTimes[BREAK] + interruptionDelay - currentTime)
 
             if currentTime > (objectiveTimes[BREAK] + interruptionDelay):
                 just_passed_break_time()
         else: 
             if not inInterruption:
-                display_and_format_seconds(currentTime - (objectiveTimes[SPRINT] + interruptionDelay))
+                oc.display_and_format_seconds(currentTime - (objectiveTimes[SPRINT] + interruptionDelay))
 
 
     if inInterruption:
-        display_and_format_seconds(currentTime - startTimes[INTERRUPTION])
+        oc.display_and_format_seconds(currentTime - startTimes[INTERRUPTION])

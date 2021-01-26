@@ -44,7 +44,7 @@ CITY = LocationInfo("Milton, WV", "United States", "US/Eastern", 38.435060, -82.
 MORNING_WAKE_EFFECT_LENGHT = 10 * 60 
 
 SPRINT_L_B = (0, 255, 0, 0.6)
-BREAK_L_B = (255, 234, 0, 0.5)
+BREAK_L_B = (255, 225, 0, 0.5)
 INTERRUPTION_L_B = (255, 0, 0, 1)
 
 CLOCK_BRIGHTNESS = 7 # 0 min, max 7
