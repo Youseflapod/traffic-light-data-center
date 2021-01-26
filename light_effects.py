@@ -84,11 +84,11 @@ def run_light_thread():
         set_light_calib_rgba(c.SPRINT_L_B)
 
     elif effect == START_BREAK:
-        fade_on(c.BREAK_L_B, 3)
+        fade_on(c.BREAK_L_B, 4)
         #set_light_rgba(c.BREAK_L_B)
 
     elif effect == START_INTERRUPTION:
-        intv = 0.7 # s
+        intv = 1.2 # s
         while True:
             set_light_calib_rgba(c.INTERRUPTION_L_B)
             sleep(intv)
@@ -97,16 +97,17 @@ def run_light_thread():
 
     elif effect == PAST_BREAK:
         intv = 0.55 # s
+        pause = 1.5
         while True:
             fade_on(c.BREAK_L_B, intv)
-            sleep(intv)
+            sleep(pause)
             fade_off(intv)
             sleep(intv)
     
     elif effect == ENTERING_OVERTIME:
-        intv = 0.15 # s
-        flash = 0.05
-        for i in range(0,5):
+        intv = 0.12 # s
+        flash = 0.12
+        for i in range(0,4):
             fade_off(flash)
             sleep(intv)
             fade_on(c.SPRINT_L_B,flash)
@@ -114,7 +115,7 @@ def run_light_thread():
 
     elif effect == PAST_BEDTIME:
         intv = 0.3 # s
-        cooldown = 0.5
+        cooldown = 1.8
         while True:
             set_light_calib_rgba(c.INTERRUPTION_L_B)
             sleep(intv)
@@ -128,8 +129,8 @@ def run_light_thread():
 
     elif effect == MORNING:
         intv = 5 # s
-        drop = 1 # s
-        pause = 1
+        drop = 0.3 # s
+        pause = 3
         startTime = time.time()
         endTime = startTime + c.MORNING_WAKE_EFFECT_LENGTH
         while time.time() < endTime:
@@ -150,12 +151,12 @@ def run_light_thread():
     elif effect == BEDTIME_COUNTDOWN:
         intv = 0.8 # s
         longBoot = 2.8 # s
-        fade_on((255, 20, 0, 0.2), intv)    
+        fade_on((255, 9, 0, 0.2), intv)    
         fade_off(intv)
-        fade_on((255, 20, 0, 0.2), intv)
+        fade_on((255, 9, 0, 0.2), intv)
         fade_off(intv)
         
-        fade_on((255, 55, 0, 0.2), longBoot)
+        fade_on((255, 35, 0, 0.2), longBoot)
 
     elif effect == DEMO_MODE:
         intv = 0.08 # s
