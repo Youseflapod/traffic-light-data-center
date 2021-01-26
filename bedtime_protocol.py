@@ -107,21 +107,16 @@ def display_bedtime():
     isDisplayingBedtime = True
 
 def check_if_time_to_update_calculations():
-    print("come on")
     global isCalculatingTime
     start = datetime.time(c.DAILY_RECALCULATION_HOUR)
-    end = start + timedelta(seconds=5)
-    print("why does this fail?")
+    end = datetime.time(c.DAILY_RECALCULATION_HOUR, 1)
     if start <= get_localized_time() <= end:
-        print("in the time")
         if isCalculatingTime:
-            print("reutrned from calculating time")
             return
         isCalculatingTime = True
         calculate_sunrise_of_tomorrow_and_bedtime() 
     else:
         isCalculatingTime = False
-        print("not calculating time")
 
 def update_time_state_booleans():
     global isTimeToDisplayBedtime, isWithinBedtimeCountdown, isPastBedtime
@@ -187,8 +182,6 @@ def update_bedtime_protocol():
                 activate_bedtime_countdown()
             elif isTimeToDisplayBedtime:
                 display_bedtime()
-    print("made it this far")
+    
     check_if_time_to_update_calculations()
-    print("weird")
     check_if_wake_up_time()
-    print("idk")
