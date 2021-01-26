@@ -67,14 +67,17 @@ def end_sprint():
 
 def start_break(breakLength):
     global inBreak, startTimes, objectiveTimes
-    startTimes[BREAK] = time.time()
-    objectiveTimes[BREAK] = startTimes[BREAK] + breakLength
+    
     inBreak = True
+
+    if inSprint:
+        end_sprint()
 
     if inInterruption:
         end_interruption()
-    if inSprint:
-        end_sprint()
+    else: 
+        startTimes[BREAK] = time.time()
+        objectiveTimes[BREAK] = startTimes[BREAK] + breakLength
 
     leff.start(leff.START_BREAK)
     
@@ -82,15 +85,17 @@ def start_break(breakLength):
 def start_sprint(sprintLength):
     global inSprint, startTimes, objectiveTimes 
     inSprint = True
-    startTimes[SPRINT] = time.time()
-    objectiveTimes[SPRINT] = startTimes[SPRINT] + sprintLength
 
     if not inSession:
         start_session()
     if inBreak:
         end_break()
+
     if inInterruption:
         end_interruption()
+    else: 
+        startTimes[SPRINT] = time.time()
+        objectiveTimes[SPRINT] = startTimes[SPRINT] + sprintLength
 
     leff.start(leff.START_SPRINT)
 
