@@ -182,6 +182,7 @@ def update_bedtime_protocol():
                 activate_bedtime_countdown()
             elif isTimeToDisplayBedtime:
                 display_bedtime()
-    
+    print("made it this far")
     check_if_time_to_update_calculations()
     check_if_wake_up_time()
+    print("idk")
