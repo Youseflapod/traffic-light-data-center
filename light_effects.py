@@ -19,7 +19,7 @@ DEMO_MODE = 11
 
 currentEffect = -1
 
-FADE_FPS = 144
+FADE_FPS = 14
 SLEEP_TIME = 1.0 / FADE_FPS
 EXP_FINAL_SLOPE = 0.05
 
@@ -42,12 +42,13 @@ def fade_off(length):
     T = float(length)
     b = EXP_FINAL_SLOPE
     C = alpha
-    a = - (1/T) * np.log(b / (C + b) )
+    a = -1 * (1/T) * np.log(b / (C + b) )
+    print(f'a = {a}')
     for n in range(1, numberOfFrames+1):
         time.sleep(SLEEP_TIME)
         t = n * SLEEP_TIME
         currentBrightness = (C + b)*np.exp(-1*a*t) - b
-        print(currentBrightness)
+        print(f'{n}: {currentBrightness}')
         set_light_rgba((red,green,blue,currentBrightness))
 
         
