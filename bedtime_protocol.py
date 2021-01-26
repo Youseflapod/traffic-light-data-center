@@ -29,6 +29,10 @@ recordedAbortTime = abortBedtimeDate = datetime.datetime(2000, 1, 1)
 
 recordedBedtime = bedtimeDate = datetime.datetime(2000, 1, 1)
 
+def get_localized_time():
+    return c.TZ.localize(datetime.datetime.now())
+
+
 def dim_clock_to_sleep():
     currentBrightness = 7
     oc.display_clock_time(wakeTimeTomorrow)
@@ -44,7 +48,7 @@ def flash_bedtime_then_sleep():
     dim = 2
     oc.display_clock_time(wakeTimeTomorrow)
     time.sleep(2)
-    for i in range(3):
+    for i in range(3): 
         oc.clockDisplay.SetBrightness(currentBrightness)
         time.sleep(0.8)
         oc.clockDisplay.SetBrightness(dim)
@@ -55,12 +59,12 @@ def bedtime():
     global recordedBedtime, bedtimeDate
     global isDisplayingBedtime, isDisplayingBedtimeCountdown, isBedtimeSirenProtocolEnabled
     isDisplayingBedtime = isDisplayingBedtimeCountdown = isBedtimeSirenProtocolEnabled = False
-    recordedBedtime = datetime.datetime.now()
+    recordedBedtime = get_localized_time()
     if isPastBedtime and bedtimeTonight.day != recordedBedtime.day:
         # shame on you
         bedtimeDate = bedtimeTonight.date()
     else:
-        bedtimeDate = datetime.datetime.today().date()
+        bedtimeDate = get_localized_time().date()
     leff.start(leff.BEDTIME)
     t = threading.Thread(target=flash_bedtime_then_sleep, args=[])
     t.start()
@@ -69,12 +73,12 @@ def abort_bedtime_protocol():
     global recordedAbortTime, abortBedtimeDate
     global isDisplayingBedtime, isDisplayingBedtimeCountdown, isBedtimeSirenProtocolEnabled
     isDisplayingBedtime = isDisplayingBedtimeCountdown = isBedtimeSirenProtocolEnabled = False
-    recordedAbortTime = datetime.datetime.now()
+    recordedAbortTime = get_localized_time()
     if isPastBedtime and bedtimeTonight.day != recordedAbortTime.day:
         # shame on you
         abortBedtimeDate = bedtimeTonight.date()
     else:
-        abortBedtimeDate = datetime.datetime.today().date()
+        abortBedtimeDate = get_localized_time().date()
 
     leff.start(leff.ABORT_BEDTIME_PROTOCOL)
 
@@ -90,7 +94,7 @@ def activate_bedtime_countdown():
     global isDisplayingBedtimeCountdown
     if isDisplayingBedtimeCountdown:
         return
-    dt = bedtimeTonight - datetime.datetime.now()
+    dt = bedtimeTonight - get_localized_time()
     oc.display_and_format_seconds(dt.seconds)
     isDisplayingBedtimeCountdown = True
     leff.start(leff.BEDTIME_COUNTDOWN)
@@ -106,7 +110,7 @@ def check_if_time_to_update_calculations():
     global isCalculatingTime
     start = datetime.time(c.DAILY_RECALCULATION_HOUR)
     end = start + timedelta(seconds=5)
-    if start <= datetime.datetime.now() <= end:
+    if start <= get_localized_time() <= end:
         if isCalculatingTime:
             return
         isCalculatingTime = True
@@ -116,7 +120,7 @@ def check_if_time_to_update_calculations():
 
 def update_time_state_booleans():
     global isTimeToDisplayBedtime, isWithinBedtimeCountdown, isPastBedtime
-    now = datetime.datetime.now()
+    now = get_localized_time()
     if now.day != bedtimeTonight.day:
         return # waiting until next recalculation
     # after midnight, isPastBedtime remains on until further update
@@ -141,7 +145,7 @@ def should_bedtime_protocol_continue():
 def calculate_sunrise_of_tomorrow_and_bedtime():
     global hasPerformedDailyRecalculation, sunriseTomorrow, bedtimeTonight, wakeTimeTomorrow
     global showBedtimeTime, showBedtimeCountdownTime
-    tomorrow = datetime.datetime.today() + timedelta(days=1)
+    tomorrow = get_localized_time() + timedelta(days=1)
     s = sun(c.CITY.observer, date=tomorrow.date(), tzinfo=c.CITY.timezone)
     hasPerformedDailyRecalculation = True
     sunriseTomorrow = s["sunrise"]
@@ -154,7 +158,7 @@ def check_if_wake_up_time():
     global isWakeUpTime
     start = wakeTimeTomorrow
     end = start + timedelta(seconds=5)
-    if start <= datetime.datetime.now() <= end:
+    if start <= get_localized_time() <= end:
         if isWakeUpTime:
             return
         isWakeUpTime = True
