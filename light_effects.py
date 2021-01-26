@@ -88,13 +88,13 @@ def run_light_thread():
         #set_light_rgba(c.BREAK_L_B)
 
     elif effect == START_INTERRUPTION:
-        intv = 0.16 # s
-        flash = 0.13
+        intv = 0.2 # s
+        flash = 0.07
         flashPause = 0.05
         for i in range(0,3):
             fade_off(flash)
             sleep(intv)
-            fade_on(c.SPRINT_L_B,flash)
+            fade_on(c.INTERRUPTION_L_B,flash)
             sleep(flashPause)
 
         intv = 1.7 # s
@@ -117,15 +117,15 @@ def run_light_thread():
         intv = 0.16 # s
         flash = 0.13
         flashPause = 0.05
-        for i in range(0,3):
+        for i in range(0,2):
             fade_off(flash)
             sleep(intv)
             fade_on(c.SPRINT_L_B,flash)
             sleep(flashPause)
 
     elif effect == PAST_BEDTIME:
-        intv = 0.3 # s
-        cooldown = 2.3
+        intv = 0.18 # s
+        cooldown = 2.1
         while True:
             set_light_calib_rgba(c.INTERRUPTION_L_B)
             sleep(intv)
