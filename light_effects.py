@@ -115,7 +115,7 @@ def run_light_thread():
     
     elif effect == ENTERING_OVERTIME:
         intv = 0.16 # s
-        flash = 0.13
+        flash = 0.09
         flashPause = 0.05
         for i in range(0,2):
             fade_off(flash)
@@ -135,7 +135,7 @@ def run_light_thread():
     elif effect == BEDTIME:
         r,g,b,a = c.BREAK_L_B # pylint: disable=unused-variable
         set_light_calib_rgba((r,g,b, 1))
-        fade_off(7.5)
+        fade_off(8.3)
 
     elif effect == MORNING:
         intv = 5 # s

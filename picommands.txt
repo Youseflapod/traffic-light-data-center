@@ -2,6 +2,7 @@ cd -
 rm -rf traffic-light-data-center/  
 git clone https://github.com/Youseflapod/traffic-light-data-center     
 cd traffic-light-data-center/
+
 python3 debug_light_effects.py
 
 
