@@ -12,7 +12,7 @@ flickeringTimers = [0.0,0.0,0.0]
 startTime = [0.0,0.0,0.0]
 
 def too_long(timeHeld):
-    return timeHeld < c.MAX_CLICK_TIME
+    return timeHeld > c.MAX_CLICK_TIME
 
 def green_button_released(timeHeld):
     print(f'Green Button released: timeheld: {timeHeld}')
