@@ -22,7 +22,8 @@ light_effects.turnOff()
 
 
 def main():
-
+    print("started successfully")
+    
     while(True):
 
         button_listener.listen_to_the_buttons()
