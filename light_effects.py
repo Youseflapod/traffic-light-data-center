@@ -107,8 +107,9 @@ def run_light_thread():
     elif effect == PAST_BREAK:
         intv = 0.55 # s
         pause = 1.2
+        r,g,b,a = c.BREAK_L_B # pylint: disable=unused-variable
         while True:
-            fade_on(c.BREAK_L_B, intv)
+            fade_on((r,g,b,1), intv)
             sleep(pause)
             fade_off(intv)
             sleep(pause)
