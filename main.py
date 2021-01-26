@@ -5,8 +5,8 @@ import session_manager
 import light_effects
 import output_controller
 import debug_light_effects
-from global_vars import * # pylint: disable=unused-wildcard-import
-
+import constant_parameters as c
+import time
 import logging
 import datetime
 
@@ -14,7 +14,7 @@ logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(level
 
 # on boot safety in case I reboot at 11:30 lol
 bedtime_protocol.calculate_sunrise_of_tomorrow_and_bedtime()
-if datetime.datetime.now() > bedtimeTonight:
+if datetime.datetime.now() > bedtime_protocol.bedtimeTonight:
     bedtime_protocol.abort_bedtime_protocol()
 
 def main():
@@ -30,7 +30,7 @@ def main():
         light_effects.update_light_effects()
         output_controller.update_output_controller()
 
-        time.sleep(DT)
+        time.sleep(c.DT)
 
 if not debug_light_effects.DEBUG:
     try:

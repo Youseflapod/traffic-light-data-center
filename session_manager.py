@@ -1,4 +1,4 @@
-from global_vars import * # pylint: disable=unused-wildcard-import
+import constant_parameters as c
 import time
 from output_controller import * # pylint: disable=unused-wildcard-import
 import light_effects as leff
@@ -7,6 +7,13 @@ SESSION = 0
 SPRINT = 1
 BREAK = 2
 INTERRUPTION = 3
+
+inSession = False
+inInterruption = False
+inBreak = False
+inSprint = False
+inOverTime = False
+isPastBreakTime = False
 
 startTimes = [0, 0, 0, 0]
 objectiveTimes = [0, 0, 0, 0]
@@ -35,9 +42,9 @@ def end_interruption():
     interruptionDelay += time.time() - startTimes[INTERRUPTION]
    
     if inBreak:
-        override_light_calib_rgba(BREAK_L_B)
+        override_light_calib_rgba(c.BREAK_L_B)
     if inSprint:
-        override_light_calib_rgba(SPRINT_L_B)
+        override_light_calib_rgba(c.SPRINT_L_B)
 
 def just_passed_break_time():
     global isPastBreakTime

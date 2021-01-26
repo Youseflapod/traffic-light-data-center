@@ -1,4 +1,4 @@
-from global_vars import * # pylint: disable=unused-wildcard-import
+import constant_parameters as c
 import logging
 import light_effects
 import RPi.GPIO # pylint: disable=import-error
@@ -25,7 +25,7 @@ pi.set_PWM_range(BLUE_LED_PIN, PWM_RANGE)
 
 clockDisplay = tm1637.TM1637(CLK_PIN, DIO_PIN, tm1637.BRIGHT_TYPICAL)
 clockDisplay.Clear()
-clockDisplay.SetBrightness(CLOCK_BRIGHTNESS)
+clockDisplay.SetBrightness(c.CLOCK_BRIGHTNESS)
 
 shouldDisplayBeClear = True
 isDisplayActuallyClear = True

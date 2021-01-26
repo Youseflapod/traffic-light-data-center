@@ -1,19 +1,19 @@
-from global_vars import * # pylint: disable=unused-wildcard-import
-from button_listener import * # pylint: disable=unused-wildcard-import
-from session_manager import * # pylint: disable=unused-wildcard-import
-from bedtime_protocol import * # pylint: disable=unused-wildcard-import
+import constant_parameters as c # pylint: disable=unused-wildcard-import
+import button_listener as bl # pylint: disable=unused-wildcard-import
+import session_manager as sm # pylint: disable=unused-wildcard-import
+import bedtime_protocol as bp # pylint: disable=unused-wildcard-import
 import light_effects as leff
 
 inDemoMode = False
 
 def green_button_clicked():
-    start_sprint(STANDARD_SPRINT_LENGTH)
-    if inInterruption:
-        end_interruption()
+    sm.start_sprint(c.STANDARD_SPRINT_LENGTH)
+    if sm.inInterruption:
+        sm.end_interruption()
 
 def yellow_button_clicked():
-    if inSession:
-        start_break(STANDARD_BREAK_LENGTH)
+    if sm.inSession:
+        sm.start_break(c.STANDARD_BREAK_LENGTH)
 
 def red_button_clicked():
     pass
@@ -26,8 +26,8 @@ def yellow_button_just_pressed():
 
 def red_button_just_pressed():
     pass
-    if inSession:
-        start_interruption() # because there is no hold function during session, so more immediate
+    if sm.inSession:
+        sm.start_interruption() # because there is no hold function during session, so more immediate
 
 isButtonHoldsEnabled = True
 
@@ -38,38 +38,38 @@ def disable_all_button_holds_until_all_released():
 def update_button_logic():
     global isButtonHoldsEnabled, inDemoMode
 
-    if not isGreenPressed and not isYellowPressed and not isRedPressed:
+    if not bl.isGreenPressed and not bl.isYellowPressed and not bl.isRedPressed:
         isButtonHoldsEnabled = True
 
     if isButtonHoldsEnabled: 
         
-        if greenTimeHeld > QUICK_SPRINT_HOLD_TIME and isOneButtonPressed():
-                start_sprint(QUICK_SPRINT_LENGTH)
+        if bl.greenTimeHeld > c.QUICK_SPRINT_HOLD_TIME and bl.isOneButtonPressed():
+                sm.start_sprint(c.QUICK_SPRINT_LENGTH)
 
-        if inSession:
+        if sm.inSession:
             
-            if yellowTimeHeld > LONG_BREAK_HOLD_TIME and isOneButtonPressed():
-                start_break(LONG_BREAK_LENGTH)
+            if bl.yellowTimeHeld > c.LONG_BREAK_HOLD_TIME and bl.isOneButtonPressed():
+                sm.start_break(c.LONG_BREAK_LENGTH)
             
             
-            if greenTimeHeld > END_SESSION_HOLD_TIME and yellowTimeHeld > END_SESSION_HOLD_TIME:
-                end_session()
+            if bl.greenTimeHeld > c.END_SESSION_HOLD_TIME and bl.yellowTimeHeld > c.END_SESSION_HOLD_TIME:
+                sm.end_session()
                 disable_all_button_holds_until_all_released()
             
         else:
 
-            if yellowTimeHeld > BEDTIME_SHUTDOWN_HOLD_TIME and isOneButtonPressed():
-                bedtime()
+            if bl.yellowTimeHeld > c.BEDTIME_SHUTDOWN_HOLD_TIME and bl.isOneButtonPressed():
+                bp.bedtime()
 
-            if redTimeHeld > ABORT_BEDTIME_PROTOCOL_HOLD_TIME and isOneButtonPressed():
-                abort_bedtime_protocol()
+            if bl.redTimeHeld > c.ABORT_BEDTIME_PROTOCOL_HOLD_TIME and bl.isOneButtonPressed():
+                bp.abort_bedtime_protocol()
             
-            if greenTimeHeld > DEMO_MODE_HOLD_TIME and yellowTimeHeld > DEMO_MODE_HOLD_TIME and redTimeHeld > DEMO_MODE_HOLD_TIME:
+            if bl.greenTimeHeld > c.DEMO_MODE_HOLD_TIME and bl.yellowTimeHeld > c.DEMO_MODE_HOLD_TIME and bl.redTimeHeld > c.DEMO_MODE_HOLD_TIME:
                 leff.start(leff.DEMO_MODE)
                 inDemoMode = True
                 print("DEMO MODE")
 
-            if inDemoMode and isOneButtonPressed:
+            if inDemoMode and bl.isOneButtonPressed:
                 leff.kill_effect()
                 inDemoMode = False
 

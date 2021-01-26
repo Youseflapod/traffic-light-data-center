@@ -1,4 +1,4 @@
-from global_vars import * # pylint: disable=unused-wildcard-import
+import constant_parameters as c
 import datetime
 from datetime import timedelta
 import time
@@ -6,9 +6,21 @@ import light_effects as leff
 from astral.sun import sun
 import output_controller as oc
 import threading
+import session_manager
 
 isWakeUpTime = False
 isCalculatingTime = False
+
+isTimeToDisplayBedtime = False
+isWithinBedtimeCountdown = False
+isPastBedtime = False
+isDisplayingBedtime = False
+isDisplayingBedtimeCountdown = False
+isBedtimeSirenProtocolEnabled = False
+
+sunriseTomorrow = datetime.datetime.now()
+bedtimeTonight = datetime.datetime.now()
+wakeTimeTomorrow = datetime.datetime.now()
 
 showBedtimeTime = datetime.datetime.now()
 showBedtimeCountdownTime = datetime.datetime.now()
@@ -78,7 +90,7 @@ def display_bedtime():
 
 def check_if_time_to_update_calculations():
     global isCalculatingTime
-    start = datetime.time(DAILY_RECALCULATION_HOUR)
+    start = datetime.time(c.DAILY_RECALCULATION_HOUR)
     end = start + timedelta(seconds=5)
     if start <= datetime.datetime.now() <= end:
         if isCalculatingTime:
@@ -116,13 +128,13 @@ def calculate_sunrise_of_tomorrow_and_bedtime():
     global hasPerformedDailyRecalculation, sunriseTomorrow, bedtimeTonight, wakeTimeTomorrow
     global showBedtimeTime, showBedtimeCountdownTime
     tomorrow = datetime.datetime.today() + timedelta(days=1)
-    s = sun(city.observer, date=tomorrow.date(), tzinfo=city.timezone)
+    s = sun(c.CITY.observer, date=tomorrow.date(), tzinfo=c.CITY.timezone)
     hasPerformedDailyRecalculation = True
     sunriseTomorrow = s["sunrise"]
-    bedtimeTonight = sunriseTomorrow - timedelta(seconds=calculatedBedtimeBeforeSunrise)
-    wakeTimeTomorrow = sunriseTomorrow - timedelta(seconds=calculatedWakeTimeBeforeSunrise)
-    showBedtimeCountdownTime = bedtimeTonight - timedelta(seconds=BEDTIME_COUNTDOWN_LENGTH)
-    showBedtimeTime = bedtimeTonight - timedelta(seconds=DISPLAY_BEDTIME_LENGTH)
+    bedtimeTonight = sunriseTomorrow - timedelta(seconds=c.CALCULATED_BEDTIME_BEFORE_SUNRISE)
+    wakeTimeTomorrow = sunriseTomorrow - timedelta(seconds=c.CALCULATED_WAKE_TIME_BEFORE_SUNRISE)
+    showBedtimeCountdownTime = bedtimeTonight - timedelta(seconds=c.BEDTIME_COUNTDOWN_LENGTH)
+    showBedtimeTime = bedtimeTonight - timedelta(seconds=c.DISPLAY_BEDTIME_LENGTH)
 
 def check_if_wake_up_time():
     global isWakeUpTime
@@ -141,7 +153,7 @@ def update_bedtime_protocol():
     
     update_time_state_booleans()
 
-    if not inSession:
+    if not session_manager.inSession:
         if should_bedtime_protocol_continue():
             if isPastBedtime:
                 activate_bedtime_siren_protocol()

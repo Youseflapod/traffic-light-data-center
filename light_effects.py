@@ -1,4 +1,4 @@
-import global_vars as gv # pylint: disable=unused-wildcard-import
+import constant_parameters as c 
 from output_controller import * # pylint: disable=unused-wildcard-import
 import logging
 from killable_thread import thread_with_trace
@@ -18,8 +18,9 @@ BEDTIME_COUNTDOWN = 10
 DEMO_MODE = 11
 
 currentEffect = -1
+isLightEffectRunning = False
 
-FADE_FPS = 14
+FADE_FPS = 144
 SLEEP_TIME = 1.0 / FADE_FPS
 EXP_FINAL_SLOPE = 0.05
 
@@ -60,13 +61,13 @@ def run_light_thread():
         set_light_rgba((0,0,0,0))
 
     elif effect == START_SPRINT:
-        set_light_rgba(SPRINT_L_B)
+        set_light_rgba(c.SPRINT_L_B)
 
     elif effect == START_BREAK:
-        set_light_rgba(BREAK_L_B)
+        set_light_rgba(c.BREAK_L_B)
 
     elif effect == START_INTERRUPTION:
-        set_light_rgba(INTERRUPTION_L_B)
+        set_light_rgba(c.INTERRUPTION_L_B)
 
     elif effect == PAST_BREAK:
         pass
