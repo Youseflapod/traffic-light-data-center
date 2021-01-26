@@ -2,6 +2,7 @@ import global_vars as gv # pylint: disable=unused-wildcard-import
 from output_controller import * # pylint: disable=unused-wildcard-import
 import logging
 from killable_thread import thread_with_trace
+import numpy as np
 
 END_SESSION = 0
 START_SPRINT = 1
@@ -19,20 +20,34 @@ DEMO_MODE = 11
 currentEffect = -1
 
 FADE_FPS = 144
+SLEEP_TIME = 1.0 / FADE_FPS
+EXP_FINAL_SLOPE = 0.05
 
-def fade(startRGBA, endRGBA, length):
-    sleepTime = 1.0 / FADE_FPS
-    numberOfFrames = int(length / float(sleepTime))
+def fade_linear(startRGBA, endRGBA, length):
+    numberOfFrames = int(length / float(SLEEP_TIME))
     differences = tuple(map(lambda i, j: i - j, endRGBA, startRGBA))
     stepSizes = tuple(map(lambda i: float(i) / numberOfFrames, differences))
     set_light_rgba(startRGBA)
 
     for n in range(1, numberOfFrames+1):
-        time.sleep(sleepTime)
+        time.sleep(SLEEP_TIME)
         deltaRGBA = tuple(map(lambda i: i * n, stepSizes))
         currentRGBA = tuple(map(lambda i, j: i + j, startRGBA, deltaRGBA))
         set_light_rgba(currentRGBA)
-        print(f'{n}: {currentRGBA}')
+
+
+def fade_off(length):
+    r,g,b,a = currentlyDisplayedLight
+    numberOfFrames = int(length / float(SLEEP_TIME))
+    T = length
+    b = EXP_FINAL_SLOPE
+    C = a
+    a = - (1/T) * np.log(b / (C + b) )
+    for n in range(1, numberOfFrames+1):
+        time.sleep(SLEEP_TIME)
+        t = n * SLEEP_TIME
+        currentBrightness = (C + b)*np.exp(-1*a*t) - b
+        set_light_rgba((r,g,b,currentBrightness))
 
         
 def run_light_thread():
@@ -61,7 +76,7 @@ def run_light_thread():
         pass
 
     elif effect == BEDTIME:
-        fade((255,120,0,1),(0,0,0,0), 5)
+        fade((255,120,0,1),(0,0,0,1), 5)
 
     elif effect == MORNING:
         pass
