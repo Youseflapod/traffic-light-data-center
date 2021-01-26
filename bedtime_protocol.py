@@ -153,6 +153,10 @@ def calculate_sunrise_of_tomorrow_and_bedtime():
     wakeTimeTomorrow = sunriseTomorrow - timedelta(seconds=c.CALCULATED_WAKE_TIME_BEFORE_SUNRISE)
     showBedtimeCountdownTime = bedtimeTonight - timedelta(seconds=c.BEDTIME_COUNTDOWN_LENGTH)
     showBedtimeTime = bedtimeTonight - timedelta(seconds=c.DISPLAY_BEDTIME_LENGTH)
+    print(bedtimeTonight)
+    print(wakeTimeTomorrow)
+    print(showBedtimeCountdownTime)
+    print(showBedtimeTime)
 
 def check_if_wake_up_time():
     global isWakeUpTime
