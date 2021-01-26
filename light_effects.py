@@ -114,7 +114,7 @@ def run_light_thread():
             sleep(pause)
     
     elif effect == ENTERING_OVERTIME:
-        intv = 0.16 # s
+        intv = 0.29 # s
         flash = 0.09
         flashPause = 0.05
         for i in range(0,2):
