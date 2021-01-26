@@ -33,8 +33,7 @@ currentlySetFourNumbers = [0,0,0,0]
 currentlyDisplayedLight = (0,0,0,0)
 
 def get_currently_displayed_light():
-    r,g,b,a = currentlyDisplayedLight
-    return r,g,b,a
+    return currentlyDisplayedLight
 
 def set_pin_light(pin, value, brightness):
     if value > 255 or brightness > 1:

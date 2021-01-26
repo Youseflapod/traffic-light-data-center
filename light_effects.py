@@ -37,7 +37,7 @@ def fade_linear(startRGBA, endRGBA, length):
 
 
 def fade_off(length):
-    red,green,blue,alpha = get_currently_displayed_light
+    red,green,blue,alpha = get_currently_displayed_light()
     numberOfFrames = int(length / float(SLEEP_TIME))
     T = float(length)
     b = EXP_FINAL_SLOPE
