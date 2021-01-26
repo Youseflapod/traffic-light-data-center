@@ -16,15 +16,15 @@ def too_long(timeHeld):
 
 def green_button_released(timeHeld):
     print(f'Green Button released: timeheld: {timeHeld}')
-    if not too_long:
+    if not too_long(timeHeld):
         bl.green_button_clicked()
 
 def yellow_button_released(timeHeld):
-    if not too_long:
+    if not too_long(timeHeld):
         bl.yellow_button_clicked()
 
 def red_button_released(timeHeld):
-    if not too_long:
+    if not too_long(timeHeld):
         bl.red_button_clicked()
 
 
@@ -96,7 +96,6 @@ def listen_to_the_buttons():
     if not GPIO.input(GREEN_BUTTON_PIN) == GPIO.HIGH:
         if isGreenPressed:
             flickeringTimers[GREEN] -= c.DT
-            print(flickeringTimers)
             if flickeringTimers[GREEN] <= 0:
                 isGreenPressed = False
                 green_button_released(greenTimeHeld) 
