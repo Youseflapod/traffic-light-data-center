@@ -22,7 +22,7 @@ isLightEffectRunning = False
 
 FADE_FPS = 144
 SLEEP_TIME = 1.0 / FADE_FPS
-EXP_FINAL_SLOPE = 0.01
+EXP_FINAL_SLOPE = 0.025
 
 def fade_linear(startRGBA, endRGBA, length):
     numberOfFrames = int(length / float(SLEEP_TIME))
