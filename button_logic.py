@@ -39,7 +39,7 @@ def disable_all_button_holds_until_all_released():
 def update_button_logic():
     global isButtonHoldsEnabled, inDemoMode
 
-    if not bl.isOneButtonPressed:
+    if not bl.isGreenPressed and not bl.isYellowPressed and not bl.isRedPressed:
         isButtonHoldsEnabled = True
 
     if isButtonHoldsEnabled: 
