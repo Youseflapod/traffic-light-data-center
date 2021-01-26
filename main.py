@@ -17,6 +17,10 @@ bedtime_protocol.calculate_sunrise_of_tomorrow_and_bedtime()
 if datetime.datetime.now() > bedtime_protocol.bedtimeTonight:
     bedtime_protocol.abort_bedtime_protocol()
 
+
+light_effects.turnOff()
+
+
 def main():
 
     while(True):
