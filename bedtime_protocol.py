@@ -110,6 +110,7 @@ def check_if_time_to_update_calculations():
     global isCalculatingTime
     start = datetime.time(c.DAILY_RECALCULATION_HOUR)
     end = start + timedelta(seconds=5)
+    print("why does this fail?")
     if start <= get_localized_time() <= end:
         print("in the time")
         if isCalculatingTime:
