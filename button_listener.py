@@ -15,6 +15,7 @@ def too_long(timeHeld):
     return timeHeld < c.MAX_CLICK_TIME
 
 def green_button_released(timeHeld):
+    print(f'Green Button released: timeheld: {timeHeld}')
     if not too_long:
         bl.green_button_clicked()
 
@@ -99,8 +100,6 @@ def listen_to_the_buttons():
             if flickeringTimers[GREEN] <= 0:
                 isGreenPressed = False
                 green_button_released(greenTimeHeld) 
-    else:
-        print(f'GREEN BUTTON BEING PRESSED, isGreenPressed = {isGreenPressed}')
                 
     if isGreenPressed:
         greenTimeHeld = time.time() - startTime[GREEN]
