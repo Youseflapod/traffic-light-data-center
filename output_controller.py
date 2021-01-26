@@ -32,6 +32,9 @@ isDisplayActuallyClear = True
 currentlySetFourNumbers = [0,0,0,0]
 currentlyDisplayedLight = (0,0,0,0)
 
+def get_currently_displayed_light():
+    return currentlyDisplayedLight
+
 def set_pin_light(pin, value, brightness):
     if value > 255 or brightness > 1:
         logging.error(f'Too bright!! My eyes! Can\'t set pin {pin} to {value} with brightness {brightness}')
