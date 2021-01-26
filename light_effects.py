@@ -96,7 +96,7 @@ def run_light_thread():
             sleep(intv)
 
     elif effect == PAST_BREAK:
-        intv = 0.3 # s
+        intv = 0.55 # s
         while True:
             fade_on(c.BREAK_L_B, intv)
             sleep(intv)
@@ -104,11 +104,11 @@ def run_light_thread():
             sleep(intv)
     
     elif effect == ENTERING_OVERTIME:
-        intv = 0.3 # s
-        for i in range(0,3):
-            set_light_calib_rgba(c.SPRINT_L_B)
-            sleep(intv)
+        intv = 0.15 # s
+        for i in range(0,5):
             turnOff()
+            sleep(intv)
+            set_light_calib_rgba(c.SPRINT_L_B)
             sleep(intv)
 
     elif effect == PAST_BEDTIME:
@@ -126,30 +126,34 @@ def run_light_thread():
 
     elif effect == MORNING:
         intv = 5 # s
+        drop = 1 # s
         pause = 1
         startTime = time.time()
         endTime = startTime + c.MORNING_WAKE_EFFECT_LENGTH
         while time.time() < endTime:
             fade_on(c.MORNING_L_B, intv)
             sleep(pause)
-            fade_off(intv)
+            fade_off(drop)
             sleep(pause)
 
     elif effect == ABORT_BEDTIME_PROTOCOL:
         intv = 0.3 # s
-        for i in range(0,3):
+        for i in range(0,5):
             turnOff()
             sleep(intv)
             set_light_calib_rgba(c.INTERRUPTION_L_B)
             sleep(intv)
-        fade_off(5)
+        fade_off(2.3)
 
     elif effect == BEDTIME_COUNTDOWN:
-        fade_on((255, 0, 0, 0.3), 2)
+        intv = 1 # s
+        fade_on((255, 90, 0, 0.2), intv)
+        fade_off(intv)
+        fade_on((255, 90, 0, 0.2), intv)
 
     elif effect == DEMO_MODE:
         intv = 0.08 # s
-        for i in range(0,20):
+        for i in range(0,10):
             set_light_rgba((255,255,255,1))
             sleep(intv)
             turnOff()
@@ -157,9 +161,11 @@ def run_light_thread():
         intv = 0.3# s
         for i in range(0,20):
             set_light_rgba((255,0,0,1))
+            sleep(0.05)
             fade_linear((255,200,0,1),intv)
             fade_linear((0,255,0,1),intv)
             fade_linear((0,0,255,1),intv)
+        fade_linear((255,0,120,1), 1)
         fade_off(5)
 
     else:
