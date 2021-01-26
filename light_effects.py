@@ -1,5 +1,6 @@
 import constant_parameters as c 
 from output_controller import set_light_rgba, set_light_calib_rgba, get_currently_displayed_light
+import output_controller as oc
 import logging
 from killable_thread import thread_with_trace
 import numpy as np

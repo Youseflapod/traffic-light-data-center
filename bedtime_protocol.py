@@ -39,6 +39,18 @@ def dim_clock_to_sleep():
     oc.clear_clock()
     oc.clockDisplay.SetBrightness(c.CLOCK_BRIGHTNESS)
 
+def flash_bedtime_then_sleep():
+    currentBrightness = 7
+    dim = 2
+    oc.display_clock_time(wakeTimeTomorrow)
+    time.sleep(2)
+    for i in range(3):
+        oc.clockDisplay.SetBrightness(currentBrightness)
+        time.sleep(0.8)
+        oc.clockDisplay.SetBrightness(dim)
+    oc.clear_clock()
+    oc.clockDisplay.SetBrightness(c.CLOCK_BRIGHTNESS)
+
 def bedtime():
     global recordedBedtime, bedtimeDate
     global isDisplayingBedtime, isDisplayingBedtimeCountdown, isBedtimeSirenProtocolEnabled
@@ -50,7 +62,7 @@ def bedtime():
     else:
         bedtimeDate = datetime.datetime.today().date()
     leff.start(leff.BEDTIME)
-    t = threading.Thread(target=dim_clock_to_sleep, args=[])
+    t = threading.Thread(target=flash_bedtime_then_sleep, args=[])
     t.start()
 
 def abort_bedtime_protocol():
