@@ -42,6 +42,12 @@ def set_pin_light(pin, value, brightness):
     realBrightness = int(round(PWM_RANGE * (value * float(brightness)) / 255.0))
     pi.set_PWM_dutycycle(pin, realBrightness)
 
+def calculate_calib_rgba(rgba_tuple):
+    r,g,b,a = rgba_tuple
+    g = g * MAX_GREEN/255.0
+    b = b * MAX_BLUE/255.0
+    return (r,g,b,a)
+
 def set_light_rgba(rgba_tuple):
     global currentlyDisplayedLight
     r,g,b,a = rgba_tuple
@@ -51,10 +57,7 @@ def set_light_rgba(rgba_tuple):
     set_pin_light(BLUE_LED_PIN, b, a)
 
 def set_light_calib_rgba(rgba_tuple):
-    r,g,b,a = rgba_tuple
-    g = g * MAX_GREEN/255.0
-    b = b * MAX_BLUE/255.0
-    set_light_rgba((r,g,b,a))
+    set_light_rgba(calculate_calib_rgba(rgba_tuple))
 
 def override_light_calib_rgba(rgba_tuple):
     light_effects.kill_effect()

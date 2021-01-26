@@ -18,7 +18,7 @@ DEMO_MODE = 11
 
 currentEffect = -1
 
-FADE_FPS = 50
+FADE_FPS = 144
 
 def fade(startRGBA, endRGBA, length):
     sleepTime = 1.0 / FADE_FPS
@@ -61,7 +61,7 @@ def run_light_thread():
         pass
 
     elif effect == BEDTIME:
-        fade((255,120,0,1),(255,120,0,0), 5)
+        fade((255,120,0,1),(0,0,0,0), 5)
 
     elif effect == MORNING:
         pass
