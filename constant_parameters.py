@@ -43,8 +43,8 @@ CITY = LocationInfo("Milton, WV", "United States", "US/Eastern", 38.435060, -82.
 
 MORNING_WAKE_EFFECT_LENGTH = AWAKENING_PERIOD_LENGTH
 
-SPRINT_L_B = (0, 255, 0, 0.6)
-BREAK_L_B = (255, 225, 0, 0.5)
+SPRINT_L_B = (0, 255, 0, 0.4)
+BREAK_L_B = (255, 225, 0, 0.4)
 INTERRUPTION_L_B = (255, 0, 0, 1)
 MORNING_L_B = (255, 250, 209,1)
 
