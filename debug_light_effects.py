@@ -18,6 +18,6 @@ def debug_press(channel):
 if DEBUG: 
     GPIO.add_event_detect(GREEN_BUTTON_PIN,GPIO.RISING,callback=debug_press) 
 
-while True:
+while DEBUG:
     print("Debugging...") 
     time.sleep(15)
