@@ -1,5 +1,4 @@
 import constant_parameters as c 
-from output_controller import set_light_rgba, set_light_calib_rgba, get_currently_displayed_light
 import output_controller as oc
 import logging
 from killable_thread import thread_with_trace
@@ -29,24 +28,24 @@ EXP_FINAL_SLOPE = 0.025
 COMPUTE_TIME = 0.0016025641025641
 
 def turnOff():
-    set_light_rgba((0,0,0,0))
+    oc.set_light_rgba((0,0,0,0))
 
 def fade_linear(endRGBA, length): # DOES NOT USE CALIB
-    startRGBA = get_currently_displayed_light()
+    startRGBA = oc.get_currently_displayed_light()
     numberOfFrames = int(length / float(SLEEP_TIME))
     differences = tuple(map(lambda i, j: i - j, endRGBA, startRGBA))
     stepSizes = tuple(map(lambda i: float(i) / numberOfFrames, differences))
-    set_light_rgba(startRGBA)
+    oc.set_light_rgba(startRGBA)
 
     for n in range(1, numberOfFrames+1):
         time.sleep(SLEEP_TIME - COMPUTE_TIME)
         deltaRGBA = tuple(map(lambda i: i * n, stepSizes))
         currentRGBA = tuple(map(lambda i, j: i + j, startRGBA, deltaRGBA))
-        set_light_rgba(currentRGBA)
+        oc.set_light_rgba(currentRGBA)
 
 
 def fade_off(length):
-    red,green,blue,alpha = get_currently_displayed_light()
+    red,green,blue,alpha = oc.get_currently_displayed_light()
     numberOfFrames = int(length / float(SLEEP_TIME))
     T = float(length)
     b = EXP_FINAL_SLOPE
@@ -56,7 +55,7 @@ def fade_off(length):
         time.sleep(SLEEP_TIME - COMPUTE_TIME)
         t = n * SLEEP_TIME
         currentBrightness = (C + b)*np.exp(-1*a*t) - b
-        set_light_rgba((red,green,blue,currentBrightness))
+        oc.set_light_rgba((red,green,blue,currentBrightness))
     turnOff()
 
 def fade_on(endRGBA,length):
@@ -70,10 +69,11 @@ def fade_on(endRGBA,length):
         time.sleep(SLEEP_TIME - COMPUTE_TIME)
         t = n * SLEEP_TIME
         currentBrightness = (C + b)*np.exp(-1*a*(T-t)) - b
-        set_light_calib_rgba((red,green,blue,currentBrightness))
+        oc.set_light_calib_rgba((red,green,blue,currentBrightness))
 
         
 def run_light_thread():
+    from output_controller import set_light_rgba, set_light_calib_rgba
     global isLightEffectRunning
     effect = currentEffect
 
@@ -203,7 +203,7 @@ def kill_effect():
     global light_thread, isLightEffectRunning
     light_thread.kill() 
     light_thread.join()
-    set_light_rgba((0,0,0,0))
+    oc.set_light_rgba((0,0,0,0))
     isLightEffectRunning = False
 
 def start(effect):
