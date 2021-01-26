@@ -173,7 +173,6 @@ def check_if_wake_up_time():
 def update_bedtime_protocol():
     update_time_state_booleans()
 
-    print("where did i go wrong?")
     if not session_manager.inSession:
         if should_bedtime_protocol_continue():
             if isPastBedtime:
