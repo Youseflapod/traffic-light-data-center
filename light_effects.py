@@ -78,8 +78,8 @@ def run_light_thread():
         pass
 
     elif effect == BEDTIME:
-        y = c.BREAK_L_B
-        set_light_calib_rgba((y(0),y(1),y(2),1))
+        r,g,b,a = c.BREAK_L_B
+        set_light_calib_rgba(r,g,b,1))
         fade_off(10)
 
     elif effect == MORNING:
