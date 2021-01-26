@@ -62,15 +62,31 @@ def gpio_red_button_released(channel):
     global flickeringTimers
     flickeringTimers[RED] = c.FLICKERING_TOLERANCE
 
+
+def gpio_green_button_both(channel):
+    if GPIO.input(GREEN_BUTTON_PIN) == GPIO.HIGH:
+        gpio_green_button_pressed(channel)
+    else:
+        gpio_green_button_released(channel)
+
+def gpio_yellow_button_both(channel):
+    if GPIO.input(YELLOW_BUTTON_PIN) == GPIO.HIGH:
+        gpio_yellow_button_pressed(channel)
+    else:
+        gpio_yellow_button_released(channel)
+
+def gpio_red_button_both(channel):
+    if GPIO.input(RED_BUTTON_PIN) == GPIO.HIGH:
+        gpio_red_button_pressed(channel)
+    else:
+        gpio_red_button_released(channel)
+
+
 if not debug_light_effects.DEBUG:
-    GPIO.add_event_detect(GREEN_BUTTON_PIN,GPIO.RISING,callback=gpio_green_button_pressed) 
-    GPIO.add_event_detect(GREEN_BUTTON_PIN,GPIO.FALLING,callback=gpio_green_button_released)
+    GPIO.add_event_detect(GREEN_BUTTON_PIN,GPIO.BOTH,callback=gpio_green_button_both) 
+    GPIO.add_event_detect(YELLOW_BUTTON_PIN,GPIO.BOTH,callback=gpio_yellow_button_both) 
+    GPIO.add_event_detect(RED_BUTTON_PIN,GPIO.BOTH,callback=gpio_red_button_both) 
 
-    GPIO.add_event_detect(YELLOW_BUTTON_PIN,GPIO.RISING,callback=gpio_yellow_button_pressed) 
-    GPIO.add_event_detect(YELLOW_BUTTON_PIN,GPIO.FALLING,callback=gpio_yellow_button_released)
-
-    GPIO.add_event_detect(RED_BUTTON_PIN,GPIO.RISING,callback=gpio_red_button_pressed) 
-    GPIO.add_event_detect(RED_BUTTON_PIN,GPIO.FALLING,callback=gpio_red_button_released)
 
 def listen_to_the_buttons():
     global flickeringTimers, startTime
