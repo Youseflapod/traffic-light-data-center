@@ -37,6 +37,7 @@ def gpio_green_button_pressed(channel):
 def gpio_green_button_released(channel):
     global flickeringTimers
     flickeringTimers[GREEN] = c.FLICKERING_TOLERANCE
+    print("GPIO GREEN BUTTON RELEASED")
 
 
 def gpio_yellow_button_pressed(channel):
@@ -96,6 +97,7 @@ def listen_to_the_buttons():
     if not GPIO.input(GREEN_BUTTON_PIN) == GPIO.HIGH:
         if isGreenPressed:
             flickeringTimers[GREEN] -= c.DT
+            print(flickeringTimers)
             if flickeringTimers[GREEN] <= 0:
                 isGreenPressed = False
                 green_button_released(greenTimeHeld) 
