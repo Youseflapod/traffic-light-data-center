@@ -98,8 +98,8 @@ def run_light_thread():
             fade_on(c.INTERRUPTION_L_B,flash)
             sleep(flashPause)
 
-        intv = 1.7 # s
-        while True:
+        intv = 1.5 # s
+        while effect == START_INTERRUPTION:
             set_light_calib_rgba(c.INTERRUPTION_L_B)
             sleep(intv)
             turnOff()
@@ -109,7 +109,7 @@ def run_light_thread():
         intv = 0.55 # s
         pause = 1.2
         r,g,b,a = c.BREAK_L_B # pylint: disable=unused-variable
-        while True:
+        while effect == PAST_BREAK:
             fade_on((r,g,b,1), intv)
             sleep(pause)
             fade_off(intv)
@@ -132,7 +132,7 @@ def run_light_thread():
     elif effect == PAST_BEDTIME:
         intv = 0.18 # s
         cooldown = 2.1
-        while True:
+        while effect == PAST_BEDTIME:
             set_light_calib_rgba(c.INTERRUPTION_L_B)
             sleep(intv)
             fade_off(cooldown)
