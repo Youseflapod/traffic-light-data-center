@@ -28,14 +28,13 @@ def main():
 
         button_listener.listen_to_the_buttons()
         button_logic.update_button_logic()
-        print("1")
 
         session_manager.update_session_manager()
         bedtime_protocol.update_bedtime_protocol()
-        print("2")
+
         light_effects.update_light_effects()
         output_controller.update_output_controller()
-        print("3")
+        
         time.sleep(c.DT)
 
 if not debug_light_effects.DEBUG:

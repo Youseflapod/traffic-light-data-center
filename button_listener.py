@@ -92,8 +92,6 @@ def listen_to_the_buttons():
     global isGreenPressed, isYellowPressed, isRedPressed
     global greenTimeHeld, yellowTimeHeld, redTimeHeld
 
-    print("gpio failed me")
-
     if not GPIO.input(GREEN_BUTTON_PIN) == GPIO.HIGH:
         if isGreenPressed:
             flickeringTimers[GREEN] -= c.DT
