@@ -10,8 +10,8 @@ import datetime
 
 pi = pigpio.pi()
 
-PWM_RANGE = 1250
-PWM_FREQUENCY = 160
+PWM_RANGE = 2000
+PWM_FREQUENCY = 100
 pi.set_PWM_frequency(RED_LED_PIN,PWM_FREQUENCY)
 pi.set_PWM_frequency(GREEN_LED_PIN,PWM_FREQUENCY)
 pi.set_PWM_frequency(BLUE_LED_PIN,PWM_FREQUENCY)
