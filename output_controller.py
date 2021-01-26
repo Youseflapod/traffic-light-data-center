@@ -125,7 +125,7 @@ def display_and_format_seconds(seconds):
         fourValues = [ int(hours / 10), hours % 10, int(disp_min / 10), disp_min % 10 ]
     else:
         disp_sec = seconds - 60 * minutes
-        fourValues = [ int(minutes / 10), minutes % 10, int(disp_sec / 10), disp_sec % 10 ]
+        fourValues = [ int(minutes / 10), int(minutes % 10), int(disp_sec / 10), int(disp_sec % 10) ]
     display_four_values(fourValues)
 
 def update_output_controller():

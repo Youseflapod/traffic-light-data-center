@@ -18,7 +18,7 @@ STANDARD_BREAK_LENGTH = 5 * 60
 STANDARD_SPRINT_LENGTH = 25 * 60
 QUICK_SPRINT_LENGTH = 15 * 60
 
-FLICKERING_TOLERANCE = 0.2 # seconds // for button flickering
+FLICKERING_TOLERANCE = 0.1 # seconds // for button flickering
 
 
 
