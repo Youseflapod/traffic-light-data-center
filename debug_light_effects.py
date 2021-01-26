@@ -9,8 +9,8 @@ currEffect = 0
 def debug_press(channel):
     global currEffect
     print(f'Current Effect: {currEffect}')
-    leff.start(currEffect)
-    currEffect += 1
+    leff.start(int(round(currEffect)))
+    currEffect += 0.5
     if currEffect == leff.DEMO_MODE:
         currEffect = 0
     time.sleep(0.5)
