@@ -110,7 +110,6 @@ def end_session():
 
 
 def update_session_manager():
-    global inOverTime, isPastBreakTime 
     currentTime = time.time()
 
     if inSprint:

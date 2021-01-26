@@ -167,10 +167,9 @@ def check_if_wake_up_time():
         isWakeUpTime = False
 
 def update_bedtime_protocol():
-    global hasPerformedDailyRecalculation, hasWokeUp
-    
     update_time_state_booleans()
 
+    print("where did i go wrong?")
     if not session_manager.inSession:
         if should_bedtime_protocol_continue():
             if isPastBedtime:
