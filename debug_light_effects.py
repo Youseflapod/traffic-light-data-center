@@ -13,6 +13,7 @@ def debug_press(channel):
     currEffect += 1
     if currEffect == leff.DEMO_MODE:
         currEffect = 0
+    time.sleep(0.5)
 
 if DEBUG: 
     GPIO.add_event_detect(GREEN_BUTTON_PIN,GPIO.RISING,callback=debug_press) 

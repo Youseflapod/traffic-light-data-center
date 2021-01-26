@@ -126,13 +126,14 @@ def run_light_thread():
 
     elif effect == MORNING:
         intv = 5 # s
+        pause = 1
         startTime = time.time()
         endTime = startTime + c.MORNING_WAKE_EFFECT_LENGTH
         while time.time() < endTime:
-            fade_on(c.BREAK_L_B, intv)
-            sleep(intv)
+            fade_on(c.MORNING_L_B, intv)
+            sleep(pause)
             fade_off(intv)
-            sleep(intv)
+            sleep(pause)
 
     elif effect == ABORT_BEDTIME_PROTOCOL:
         intv = 0.3 # s
@@ -144,7 +145,7 @@ def run_light_thread():
         fade_off(5)
 
     elif effect == BEDTIME_COUNTDOWN:
-        fade_on((255, 0, 0, 0.5), 2)
+        fade_on((255, 0, 0, 0.3), 2)
 
     elif effect == DEMO_MODE:
         intv = 0.08 # s
