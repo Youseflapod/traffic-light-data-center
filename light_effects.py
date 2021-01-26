@@ -115,16 +115,16 @@ def run_light_thread():
     
     elif effect == ENTERING_OVERTIME:
         intv = 0.17 # s
-        flash = 0.09
-        flashPause = 0.05
+        flash = 0.15
+        flashPause = 0.13
         turnOff()
-        sleep(0.2)
+        sleep(0.22)
         for i in range(0,2):
             set_light_rgba((0,255,0,1))
             sleep(flashPause)
             fade_off(flash)
             sleep(intv)
-        fade_on(c.SPRINT_L_B, 2)    
+        fade_on(c.SPRINT_L_B, 1)    
         
 
     elif effect == PAST_BEDTIME:
