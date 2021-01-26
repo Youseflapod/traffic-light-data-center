@@ -111,6 +111,7 @@ def check_if_time_to_update_calculations():
     start = datetime.time(c.DAILY_RECALCULATION_HOUR)
     end = start + timedelta(seconds=5)
     if start <= get_localized_time() <= end:
+        print("in the time")
         if isCalculatingTime:
             print("reutrned from calculating time")
             return
@@ -118,6 +119,7 @@ def check_if_time_to_update_calculations():
         calculate_sunrise_of_tomorrow_and_bedtime() 
     else:
         isCalculatingTime = False
+        print("not calculating time")
 
 def update_time_state_booleans():
     global isTimeToDisplayBedtime, isWithinBedtimeCountdown, isPastBedtime
