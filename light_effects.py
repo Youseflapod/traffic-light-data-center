@@ -88,7 +88,7 @@ def run_light_thread():
         #set_light_rgba(c.BREAK_L_B)
 
     elif effect == START_INTERRUPTION:
-        intv = 1.2 # s
+        intv = 1.7 # s
         while True:
             set_light_calib_rgba(c.INTERRUPTION_L_B)
             sleep(intv)
@@ -97,21 +97,21 @@ def run_light_thread():
 
     elif effect == PAST_BREAK:
         intv = 0.55 # s
-        pause = 1.5
+        pause = 1.2
         while True:
             fade_on(c.BREAK_L_B, intv)
             sleep(pause)
             fade_off(intv)
-            sleep(intv)
+            sleep(pause)
     
     elif effect == ENTERING_OVERTIME:
         intv = 0.12 # s
         flash = 0.12
-        for i in range(0,4):
+        for i in range(0,3):
             fade_off(flash)
             sleep(intv)
             fade_on(c.SPRINT_L_B,flash)
-            sleep(intv)
+            #sleep(intv)
 
     elif effect == PAST_BEDTIME:
         intv = 0.3 # s
@@ -129,14 +129,14 @@ def run_light_thread():
 
     elif effect == MORNING:
         intv = 5 # s
-        drop = 0.3 # s
-        pause = 3
+        #drop = 0.3 # s
+        pause = 5
         startTime = time.time()
         endTime = startTime + c.MORNING_WAKE_EFFECT_LENGTH
         while time.time() < endTime:
             fade_on(c.MORNING_L_B, intv)
             sleep(pause)
-            fade_off(drop)
+            fade_off(intv)
             sleep(pause)
 
     elif effect == ABORT_BEDTIME_PROTOCOL:
@@ -150,13 +150,13 @@ def run_light_thread():
 
     elif effect == BEDTIME_COUNTDOWN:
         intv = 0.8 # s
-        longBoot = 2.8 # s
+        longBoot = 5 # s
         fade_on((255, 9, 0, 0.2), intv)    
         fade_off(intv)
         fade_on((255, 9, 0, 0.2), intv)
         fade_off(intv)
         
-        fade_on((255, 35, 0, 0.2), longBoot)
+        fade_on((255, 40, 0, 0.2), longBoot)
 
     elif effect == DEMO_MODE:
         intv = 0.08 # s
