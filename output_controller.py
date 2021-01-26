@@ -7,6 +7,7 @@ from pincfg import *  # pylint: disable=unused-wildcard-import
 import tm1637
 import time
 import datetime
+import threading
 
 pi = pigpio.pi()
 
@@ -82,6 +83,13 @@ def update_clock_thread():
             clockDisplay.Show(currentlySetFourNumbers)
 
         time.sleep(0.25)
+
+def __start_clock_thread():
+    t = threading.Thread(target=update_clock_thread, args=[])
+    t.start()
+
+__start_clock_thread()
+
 
 def clear_clock():
     global shouldDisplayBeClear
