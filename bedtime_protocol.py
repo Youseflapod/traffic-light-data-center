@@ -107,6 +107,7 @@ def display_bedtime():
     isDisplayingBedtime = True
 
 def check_if_time_to_update_calculations():
+    print("come on")
     global isCalculatingTime
     start = datetime.time(c.DAILY_RECALCULATION_HOUR)
     end = start + timedelta(seconds=5)
