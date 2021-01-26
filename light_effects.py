@@ -23,6 +23,7 @@ isLightEffectRunning = False
 FADE_FPS = 144
 SLEEP_TIME = 1.0 / FADE_FPS
 EXP_FINAL_SLOPE = 0.025
+COMPUTE_TIME = 0.005
 
 def fade_linear(endRGBA, length):
     startRGBA = get_currently_displayed_light()
@@ -32,7 +33,7 @@ def fade_linear(endRGBA, length):
     set_light_rgba(startRGBA)
 
     for n in range(1, numberOfFrames+1):
-        time.sleep(SLEEP_TIME)
+        time.sleep(SLEEP_TIME - COMPUTE_TIME)
         deltaRGBA = tuple(map(lambda i: i * n, stepSizes))
         currentRGBA = tuple(map(lambda i, j: i + j, startRGBA, deltaRGBA))
         set_light_rgba(currentRGBA)
@@ -46,7 +47,7 @@ def fade_off(length):
     C = alpha
     a = -1 * (1/T) * np.log(b / (C + b) )
     for n in range(1, numberOfFrames+1):
-        time.sleep(SLEEP_TIME)
+        time.sleep(SLEEP_TIME - COMPUTE_TIME)
         t = n * SLEEP_TIME
         currentBrightness = (C + b)*np.exp(-1*a*t) - b
         set_light_rgba((red,green,blue,currentBrightness))
