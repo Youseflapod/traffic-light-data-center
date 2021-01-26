@@ -4,10 +4,15 @@ import time
 
 DEBUG = True
 
-effect = leff.BEDTIME
+currEffect = 0
 
 def debug_press(channel):
-    leff.start(effect)
+    global currEffect
+    print(f'Current Effect: {currEffect}')
+    leff.start(currEffect)
+    currEffect += 1
+    if currEffect == leff.DEMO_MODE:
+        currEffect = 0
 
 if DEBUG: 
     GPIO.add_event_detect(GREEN_BUTTON_PIN,GPIO.RISING,callback=debug_press) 

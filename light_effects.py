@@ -3,6 +3,8 @@ from output_controller import * # pylint: disable=unused-wildcard-import
 import logging
 from killable_thread import thread_with_trace
 import numpy as np
+from time import sleep
+import time
 
 END_SESSION = 0
 START_SPRINT = 1
@@ -25,7 +27,10 @@ SLEEP_TIME = 1.0 / FADE_FPS
 EXP_FINAL_SLOPE = 0.025
 COMPUTE_TIME = 0.0016025641025641
 
-def fade_linear(endRGBA, length):
+def turnOff():
+    set_light_rgba((0,0,0,0))
+
+def fade_linear(endRGBA, length): # DOES NOT USE CALIB
     startRGBA = get_currently_displayed_light()
     numberOfFrames = int(length / float(SLEEP_TIME))
     differences = tuple(map(lambda i, j: i - j, endRGBA, startRGBA))
@@ -51,6 +56,20 @@ def fade_off(length):
         t = n * SLEEP_TIME
         currentBrightness = (C + b)*np.exp(-1*a*t) - b
         set_light_rgba((red,green,blue,currentBrightness))
+    turnOff()
+
+def fade_on(endRGBA,length):
+    red,green,blue,alpha = endRGBA
+    numberOfFrames = int(length / float(SLEEP_TIME))
+    T = float(length)
+    b = EXP_FINAL_SLOPE
+    C = alpha
+    a = -1 * (1/T) * np.log(b / (C + b) )
+    for n in range(1, numberOfFrames+1):
+        time.sleep(SLEEP_TIME - COMPUTE_TIME)
+        t = n * SLEEP_TIME
+        currentBrightness = (C + b)*np.exp(-1*a*(T-t)) - b
+        set_light_calib_rgba((red,green,blue,currentBrightness))
 
         
 def run_light_thread():
@@ -58,42 +77,89 @@ def run_light_thread():
     effect = currentEffect
 
     if effect == END_SESSION:
-        set_light_rgba((0,0,0,0))
+        fade_linear((255,0,120,1), 2)
+        fade_off(4)
 
     elif effect == START_SPRINT:
-        set_light_rgba(c.SPRINT_L_B)
+        set_light_calib_rgba(c.SPRINT_L_B)
 
     elif effect == START_BREAK:
-        set_light_rgba(c.BREAK_L_B)
+        fade_on(c.BREAK_L_B,2.5)
+        #set_light_rgba(c.BREAK_L_B)
 
     elif effect == START_INTERRUPTION:
-        set_light_rgba(c.INTERRUPTION_L_B)
+        intv = 0.6 # s
+        while True:
+            set_light_calib_rgba(c.INTERRUPTION_L_B)
+            sleep(intv)
+            turnOff()
+            sleep(intv)
 
     elif effect == PAST_BREAK:
-        pass
+        intv = 0.3 # s
+        while True:
+            fade_on(c.BREAK_L_B, intv)
+            sleep(intv)
+            fade_off(intv)
+            sleep(intv)
     
     elif effect == ENTERING_OVERTIME:
-        pass
+        intv = 0.3 # s
+        for i in range(0,3):
+            set_light_calib_rgba(c.SPRINT_L_B)
+            sleep(intv)
+            turnOff()
+            sleep(intv)
 
     elif effect == PAST_BEDTIME:
-        pass
+        intv = 0.6 # s
+        while True:
+            set_light_calib_rgba(c.INTERRUPTION_L_B)
+            sleep(intv)
+            turnOff()
+            sleep(intv)
 
     elif effect == BEDTIME:
-        r,g,b,a = c.BREAK_L_B
-        set_light_calib_rgba((r,g,b,1))
-        fade_off(7)
+        r,g,b,a = c.BREAK_L_B # pylint: disable=unused-variable
+        set_light_calib_rgba((r,g,b, 1))
+        fade_off(9)
 
     elif effect == MORNING:
-        pass
+        intv = 5 # s
+        startTime = time.time()
+        endTime = startTime + c.MORNING_WAKE_EFFECT_LENGTH
+        while time.time() < endTime:
+            fade_on(c.BREAK_L_B, intv)
+            sleep(intv)
+            fade_off(intv)
+            sleep(intv)
 
     elif effect == ABORT_BEDTIME_PROTOCOL:
-        pass
+        intv = 0.3 # s
+        for i in range(0,3):
+            turnOff()
+            sleep(intv)
+            set_light_calib_rgba(c.INTERRUPTION_L_B)
+            sleep(intv)
+        fade_off(5)
 
     elif effect == BEDTIME_COUNTDOWN:
-        set_light_rgba((255, 0, 0, 0.5))
+        fade_on((255, 0, 0, 0.5), 2)
 
     elif effect == DEMO_MODE:
-        pass
+        intv = 0.08 # s
+        for i in range(0,20):
+            set_light_rgba((255,255,255,1))
+            sleep(intv)
+            turnOff()
+            sleep(intv)
+        intv = 0.3# s
+        for i in range(0,20):
+            set_light_rgba((255,0,0,1))
+            fade_linear((255,200,0,1),intv)
+            fade_linear((0,255,0,1),intv)
+            fade_linear((0,0,255,1),intv)
+        fade_off(5)
 
     else:
         logging.error(f'Oops! No such available effect with the value: {effect}' )
