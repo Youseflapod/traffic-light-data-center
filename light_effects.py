@@ -84,11 +84,11 @@ def run_light_thread():
         set_light_calib_rgba(c.SPRINT_L_B)
 
     elif effect == START_BREAK:
-        fade_on(c.BREAK_L_B,2.5)
+        fade_on(c.BREAK_L_B, 3)
         #set_light_rgba(c.BREAK_L_B)
 
     elif effect == START_INTERRUPTION:
-        intv = 0.6 # s
+        intv = 0.7 # s
         while True:
             set_light_calib_rgba(c.INTERRUPTION_L_B)
             sleep(intv)
@@ -105,24 +105,26 @@ def run_light_thread():
     
     elif effect == ENTERING_OVERTIME:
         intv = 0.15 # s
+        flash = 0.05
         for i in range(0,5):
-            turnOff()
+            fade_off(flash)
             sleep(intv)
-            set_light_calib_rgba(c.SPRINT_L_B)
+            fade_on(c.SPRINT_L_B,flash)
             sleep(intv)
 
     elif effect == PAST_BEDTIME:
-        intv = 0.6 # s
+        intv = 0.3 # s
+        cooldown = 0.5
         while True:
             set_light_calib_rgba(c.INTERRUPTION_L_B)
             sleep(intv)
-            turnOff()
+            fade_off(cooldown)
             sleep(intv)
 
     elif effect == BEDTIME:
         r,g,b,a = c.BREAK_L_B # pylint: disable=unused-variable
         set_light_calib_rgba((r,g,b, 1))
-        fade_off(9)
+        fade_off(7.5)
 
     elif effect == MORNING:
         intv = 5 # s
@@ -146,10 +148,14 @@ def run_light_thread():
         fade_off(2.3)
 
     elif effect == BEDTIME_COUNTDOWN:
-        intv = 1 # s
-        fade_on((255, 90, 0, 0.2), intv)
+        intv = 0.8 # s
+        longBoot = 2.8 # s
+        fade_on((255, 20, 0, 0.2), intv)    
         fade_off(intv)
-        fade_on((255, 90, 0, 0.2), intv)
+        fade_on((255, 20, 0, 0.2), intv)
+        fade_off(intv)
+        
+        fade_on((255, 55, 0, 0.2), longBoot)
 
     elif effect == DEMO_MODE:
         intv = 0.08 # s
@@ -159,14 +165,14 @@ def run_light_thread():
             turnOff()
             sleep(intv)
         intv = 0.3# s
-        for i in range(0,20):
+        for i in range(0,12):
             set_light_rgba((255,0,0,1))
             sleep(0.05)
             fade_linear((255,200,0,1),intv)
             fade_linear((0,255,0,1),intv)
             fade_linear((0,0,255,1),intv)
-        fade_linear((255,0,120,1), 1)
-        fade_off(5)
+        fade_linear((255,0,120,1), 2)
+        fade_off(7)
 
     else:
         logging.error(f'Oops! No such available effect with the value: {effect}' )
