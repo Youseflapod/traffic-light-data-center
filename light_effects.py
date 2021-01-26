@@ -37,17 +37,18 @@ def fade_linear(startRGBA, endRGBA, length):
 
 
 def fade_off(length):
-    r,g,b,a = currentlyDisplayedLight
+    red,green,blue,alpha = currentlyDisplayedLight
     numberOfFrames = int(length / float(SLEEP_TIME))
-    T = length
+    T = float(length)
     b = EXP_FINAL_SLOPE
-    C = a
+    C = alpha
     a = - (1/T) * np.log(b / (C + b) )
     for n in range(1, numberOfFrames+1):
         time.sleep(SLEEP_TIME)
         t = n * SLEEP_TIME
         currentBrightness = (C + b)*np.exp(-1*a*t) - b
-        set_light_rgba((r,g,b,currentBrightness))
+        print(currentBrightness)
+        set_light_rgba((red,green,blue,currentBrightness))
 
         
 def run_light_thread():
@@ -76,7 +77,8 @@ def run_light_thread():
         pass
 
     elif effect == BEDTIME:
-        fade((255,120,0,1),(0,0,0,1), 5)
+        set_light_calib_rgba((255,255,255,1))
+        fade_off(5)
 
     elif effect == MORNING:
         pass
