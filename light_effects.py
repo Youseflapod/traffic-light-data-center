@@ -124,7 +124,7 @@ def run_light_thread():
             sleep(flashPause)
             fade_off(flash)
             sleep(intv)
-        fade_on(c.SPRINT_L_B, 1)    
+        fade_on(c.SPRINT_L_B, 1.4)    
         
 
     elif effect == PAST_BEDTIME:

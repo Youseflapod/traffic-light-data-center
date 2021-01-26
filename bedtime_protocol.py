@@ -35,7 +35,9 @@ def dim_clock_to_sleep():
     while currentBrightness >= 0:
         oc.clockDisplay.SetBrightness(currentBrightness)
         time.sleep(0.8)
+        currentBrightness -= 1
     oc.clear_clock()
+    oc.clockDisplay.SetBrightness(c.CLOCK_BRIGHTNESS)
 
 def bedtime():
     global recordedBedtime, bedtimeDate
