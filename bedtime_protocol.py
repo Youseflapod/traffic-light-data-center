@@ -108,8 +108,8 @@ def display_bedtime():
 
 def check_if_time_to_update_calculations():
     global isCalculatingTime
-    start = datetime.time(c.DAILY_RECALCULATION_HOUR)
-    end = datetime.time(c.DAILY_RECALCULATION_HOUR, 1)
+    start = get_localized_time().replace(hour=c.DAILY_RECALCULATION_HOUR)
+    end = start + timedelta(seconds=5)
     if start <= get_localized_time() <= end:
         if isCalculatingTime:
             return
