@@ -34,7 +34,7 @@ recordedBedtime = bedtimeDate = datetime.datetime(2000, 1, 1)
 def get_localized_time():
     return c.TZ.localize(datetime.datetime.now())
 
-__debugWakeTime = get_localized_time()+timedelta(seconds=30)
+#__debugWakeTime = get_localized_time()+timedelta(seconds=30)
 
 
 def dim_clock_to_sleep():
@@ -171,7 +171,7 @@ def calculate_sunrise_of_tomorrow_and_bedtime():
 
 def check_if_wake_up_time():
     global isWakeUpTime
-    start = __debugWakeTime #wakeTimeTomorrow
+    start = wakeTimeTomorrow
     end = start + timedelta(seconds=5)
     if start <= get_localized_time() <= end:
         if isWakeUpTime:

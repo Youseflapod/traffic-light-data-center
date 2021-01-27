@@ -160,8 +160,8 @@ def __end_session_thread():
     time.sleep(2.5)
     if not isDislayingStats:
         oc.clear_clock()
-    time.sleep(5)
-    
+    time.sleep(5.5)
+
     if inSprint or inBreak:
         return # a new one was started during shutdown lol
         
