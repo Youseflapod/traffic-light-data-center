@@ -144,6 +144,7 @@ def run_light_thread():
         pauseMax = 1.4
         flashPause = intv
         while effect == PAST_BEDTIME:
+            oc.set_clock_brightness(0)
             for i in range(3):
                 if i == 1:
                     set_light_rgba((0,0,255,1))
@@ -151,8 +152,8 @@ def run_light_thread():
                     set_light_calib_rgba(c.INTERRUPTION_L_B)
                 sleep(intv)
                 turnOff()
-                oc.clear_clock()
                 sleep(flashPause)
+            oc.set_clock_brightness(7)
             sleep(random() * pauseMax)
 
     elif effect == BEDTIME:

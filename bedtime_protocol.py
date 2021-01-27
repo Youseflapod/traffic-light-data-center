@@ -56,7 +56,7 @@ def flash_bedtime_then_sleep():
         oc.clockDisplay.SetBrightness(currentBrightness)
         time.sleep(intv)
     oc.clear_clock()
-    oc.clockDisplay.SetBrightness(c.CLOCK_BRIGHTNESS)
+    oc.set_clock_brightness(c.CLOCK_BRIGHTNESS)
 
 def bedtime():
     global recordedBedtime, bedtimeDate
@@ -85,6 +85,7 @@ def abort_bedtime_protocol():
 
     leff.start(leff.ABORT_BEDTIME_PROTOCOL)
     oc.clear_clock()
+    oc.set_clock_brightness(c.CLOCK_BRIGHTNESS)
 
 def activate_bedtime_siren_protocol():
     global isBedtimeSirenProtocolEnabled

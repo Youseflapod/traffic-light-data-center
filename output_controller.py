@@ -95,6 +95,10 @@ def __start_clock_thread():
 
 __start_clock_thread()
 
+def set_clock_brightness(val):
+    # VALUES FROM 0 TO 7
+    clockDisplay.SetBrightness(val)
+
 def set_double_point(boolean):
     global doublePoint
     clockDisplay.ShowDoublepoint(boolean)
