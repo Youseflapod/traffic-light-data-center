@@ -153,6 +153,8 @@ def calculate_sunrise_of_tomorrow_and_bedtime():
     global hasPerformedDailyRecalculation, sunriseTomorrow, bedtimeTonight, wakeTimeTomorrow
     global showBedtimeTime, showBedtimeCountdownTime
     tomorrow = get_localized_time() + timedelta(days=1)
+    if get_localized_time() < get_localized_time().replace(hour=c.DAILY_RECALCULATION_HOUR):
+        tomorrow = get_localized_time()
     s = sun(c.CITY.observer, date=tomorrow.date(), tzinfo=c.CITY.timezone)
     hasPerformedDailyRecalculation = True
     sunriseTomorrow = s["sunrise"]
