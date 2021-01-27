@@ -51,9 +51,9 @@ def flash_bedtime_then_sleep():
     time.sleep(9.5)
     intv = 0.5
     for i in range(0,3): 
-        oc.clockDisplay.SetBrightness(currentBrightness)
-        time.sleep(intv)
         oc.clockDisplay.SetBrightness(dim)
+        time.sleep(intv)
+        oc.clockDisplay.SetBrightness(currentBrightness)
         time.sleep(intv)
     oc.clear_clock()
     oc.clockDisplay.SetBrightness(c.CLOCK_BRIGHTNESS)
