@@ -141,7 +141,7 @@ def run_light_thread():
     elif effect == PAST_BEDTIME:
         intv = 0.18 # s
         pause = 0.00 
-        cooldown = 1.9
+        cooldown = 1.0
         while effect == PAST_BEDTIME:
             set_light_calib_rgba(c.INTERRUPTION_L_B)
             sleep(intv)
