@@ -147,7 +147,7 @@ def run_light_thread():
         while effect == PAST_BEDTIME:
             for i in range(3):
                 if i == 1:
-                    set_light_rgba((0,255,0,1))
+                    set_light_rgba((0,0,255,1))
                 else:
                     set_light_calib_rgba(c.INTERRUPTION_L_B)
                 sleep(intv)
