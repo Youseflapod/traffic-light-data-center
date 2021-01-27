@@ -142,12 +142,11 @@ def run_light_thread():
     elif effect == PAST_BEDTIME:
         intv = 0.2 # s
         pauseMax = 0.9
-        cooldown = 0.06
         flashPause = intv
         while effect == PAST_BEDTIME:
             for i in range(3):
                 if i == 1:
-                    set_light_rgba((0,0,255,1))
+                    set_light_rgba((0,0,255,random()))
                 else:
                     set_light_calib_rgba(c.INTERRUPTION_L_B)
                 sleep(intv)
