@@ -39,7 +39,7 @@ CALCULATED_BEDTIME_BEFORE_SUNRISE = \
     CALCULATED_WAKE_TIME_BEFORE_SUNRISE \
     + REQUIRED_AMOUNT_OF_SLEEP + BEDTIME_CLOSING_PRAYERS_LENGTH
 
-DAILY_RECALCULATION_HOUR = 13 # o' clock # must be some time around noon!
+DAILY_RECALCULATION_HOUR = 8 # o' clock # MUST be some time after sunrise!
 
 TZ = pytz.timezone("US/Eastern")
 CITY = LocationInfo("Milton, WV", "United States", "US/Eastern", 38.435060, -82.192510)

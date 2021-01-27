@@ -84,6 +84,7 @@ def abort_bedtime_protocol():
         abortBedtimeDate = get_localized_time().date()
 
     leff.start(leff.ABORT_BEDTIME_PROTOCOL)
+    oc.clear_clock()
 
 def activate_bedtime_siren_protocol():
     global isBedtimeSirenProtocolEnabled
