@@ -141,7 +141,7 @@ def run_light_thread():
 
     elif effect == PAST_BEDTIME:
         intv = 0.2 # s
-        pauseMax = 2
+        pauseMax = 1.4
         flashPause = intv
         while effect == PAST_BEDTIME:
             for i in range(3):
