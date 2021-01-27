@@ -33,3 +33,5 @@ pi.set_PWM_dutycycle(G, 1)
 pi.set_PWM_range(B, 1250)
 pi.set_PWM_frequency(B,160)
 pi.set_PWM_dutycycle(B, 1)
+
+python3 /home/pi/traffic-light-data-center/main.py
