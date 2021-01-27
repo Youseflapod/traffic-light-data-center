@@ -22,9 +22,10 @@ light_effects.turnOff()
 
 
 def main():
-    print("started successfully")
+    print("started successfully!")
 
     while(True):
+        startTime = time.time()
 
         button_listener.listen_to_the_buttons()
         button_logic.update_button_logic()
@@ -34,8 +35,10 @@ def main():
 
         light_effects.update_light_effects()
         output_controller.update_output_controller()
-        
-        time.sleep(c.DT)
+
+        sleeptime = c.DT - (time.time() - startTime)
+        if sleeptime > 0:
+            time.sleep(sleeptime)
 
 if not debug_light_effects.DEBUG:
     try:

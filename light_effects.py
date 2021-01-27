@@ -25,7 +25,7 @@ isLightEffectRunning = False
 FADE_FPS = 144
 SLEEP_TIME = 1.0 / FADE_FPS
 EXP_FINAL_SLOPE = 0.025
-COMPUTE_TIME = 0.0016025641025641
+COMPUTE_TIME = 0.0016025641025641 # approximately
 
 def turnOff():
     oc.set_light_rgba((0,0,0,0))
@@ -36,12 +36,15 @@ def fade_linear(endRGBA, length): # DOES NOT USE CALIB
     differences = tuple(map(lambda i, j: i - j, endRGBA, startRGBA))
     stepSizes = tuple(map(lambda i: float(i) / numberOfFrames, differences))
     oc.set_light_rgba(startRGBA)
-
+    time.sleep(SLEEP_TIME - COMPUTE_TIME)
     for n in range(1, numberOfFrames+1):
-        time.sleep(SLEEP_TIME - COMPUTE_TIME)
+        starttime = time.time()
         deltaRGBA = tuple(map(lambda i: i * n, stepSizes))
         currentRGBA = tuple(map(lambda i, j: i + j, startRGBA, deltaRGBA))
         oc.set_light_rgba(currentRGBA)
+        sleeptime = SLEEP_TIME - (time.time() - starttime)
+        if sleeptime > 0:
+            sleep(sleeptime)
 
 
 def fade_off(length):
@@ -52,10 +55,13 @@ def fade_off(length):
     C = alpha
     a = -1 * (1/T) * np.log(b / (C + b) )
     for n in range(1, numberOfFrames+1):
-        time.sleep(SLEEP_TIME - COMPUTE_TIME)
+        starttime = time.time()
         t = n * SLEEP_TIME
         currentBrightness = (C + b)*np.exp(-1*a*t) - b
         oc.set_light_rgba((red,green,blue,currentBrightness))
+        sleeptime = SLEEP_TIME - (time.time() - starttime)
+        if sleeptime > 0:
+            sleep(sleeptime)
     turnOff()
 
 def fade_on(endRGBA,length):
@@ -66,10 +72,13 @@ def fade_on(endRGBA,length):
     C = alpha
     a = -1 * (1/T) * np.log(b / (C + b) )
     for n in range(1, numberOfFrames+1):
-        time.sleep(SLEEP_TIME - COMPUTE_TIME)
+        starttime = time.time()
         t = n * SLEEP_TIME
         currentBrightness = (C + b)*np.exp(-1*a*(T-t)) - b
         oc.set_light_calib_rgba((red,green,blue,currentBrightness))
+        sleeptime = SLEEP_TIME - (time.time() - starttime)
+        if sleeptime > 0:
+            sleep(sleeptime)
 
         
 def run_light_thread():

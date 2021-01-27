@@ -71,6 +71,7 @@ def override_light_calib_rgba(rgba_tuple):
 def update_clock_thread(): 
     global isDisplayActuallyClear
     while True:
+        starttime = time.time()
         if shouldDisplayBeClear and not isDisplayActuallyClear:
             time.sleep(0.15)
             clockDisplay.ShowDoublepoint(False)
@@ -82,7 +83,9 @@ def update_clock_thread():
             clockDisplay.ShowDoublepoint(True)
             clockDisplay.Show(currentlySetFourNumbers)
 
-        time.sleep(0.25)
+        sleeptime = 0.25 - (time.time() - starttime)
+        if sleeptime > 0:
+            time.sleep(sleeptime)
 
 def __start_clock_thread():
     t = threading.Thread(target=update_clock_thread, args=[])
