@@ -86,7 +86,7 @@ def abort_bedtime_protocol():
 
 def activate_bedtime_siren_protocol():
     global isBedtimeSirenProtocolEnabled
-    dt = get_localized_time - bedtimeTonight
+    dt = get_localized_time() - bedtimeTonight
     oc.display_and_format_seconds(int(dt.minutes)*60)
 
     if isBedtimeSirenProtocolEnabled:
