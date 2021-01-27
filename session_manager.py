@@ -67,7 +67,8 @@ def end_sprint():
 
 def start_break(breakLength):
     global inBreak, startTimes, objectiveTimes
-    
+    if inBreak:
+        end_break()
     inBreak = True
 
     if inSprint:
@@ -84,6 +85,8 @@ def start_break(breakLength):
 
 def start_sprint(sprintLength):
     global inSprint, startTimes, objectiveTimes 
+    if inSprint:
+        end_sprint()
     inSprint = True
 
     if not inSession:
