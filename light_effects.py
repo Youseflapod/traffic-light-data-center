@@ -151,6 +151,7 @@ def run_light_thread():
                     set_light_calib_rgba(c.INTERRUPTION_L_B)
                 sleep(intv)
                 turnOff()
+                oc.clear_clock()
                 sleep(flashPause)
             sleep(random() * pauseMax)
 
