@@ -110,8 +110,12 @@ def end_sprint():
 
 def start_break(breakLength):
     global inBreak, startTimes, objectiveTimes
+    statsCorrection = 0
     if inBreak and not inInterruption:
         end_break()
+        statsCorrection = c.END_STATS_DISPLAY_LENGTH
+        # if a new break is started, then no need for the 
+        # extra time to show end sprint stats
     inBreak = True
 
     if inSprint:
@@ -121,7 +125,7 @@ def start_break(breakLength):
         end_interruption()
     else: 
         startTimes[BREAK] = time.time()
-        objectiveTimes[BREAK] = startTimes[BREAK] + breakLength
+        objectiveTimes[BREAK] = startTimes[BREAK] + breakLength - statsCorrection
 
     leff.start(leff.START_BREAK)
     
