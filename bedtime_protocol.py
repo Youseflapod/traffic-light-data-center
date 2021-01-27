@@ -30,10 +30,11 @@ recordedAbortTime = abortBedtimeDate = datetime.datetime(2000, 1, 1)
 
 recordedBedtime = bedtimeDate = datetime.datetime(2000, 1, 1)
 
-__debugWakeTime = get_localized_time()+timedelta(seconds=30)
 
 def get_localized_time():
     return c.TZ.localize(datetime.datetime.now())
+
+__debugWakeTime = get_localized_time()+timedelta(seconds=30)
 
 
 def dim_clock_to_sleep():
