@@ -15,17 +15,20 @@ def too_long(timeHeld):
     return timeHeld > c.MAX_CLICK_TIME
 
 def green_button_released(timeHeld):
+    global greenTimeHeld
     print(f'Green Button released: timeheld: {timeHeld}')
     if not too_long(timeHeld):
         bl.green_button_clicked()
     greenTimeHeld = 0
 
 def yellow_button_released(timeHeld):
+    global yellowTimeHeld
     if not too_long(timeHeld):
         bl.yellow_button_clicked()
     yellowTimeHeld = 0
 
 def red_button_released(timeHeld):
+    global redTimeHeld
     if not too_long(timeHeld):
         bl.red_button_clicked()
     redTimeHeld = 0
