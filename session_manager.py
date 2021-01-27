@@ -44,19 +44,31 @@ def end_interruption():
     inInterruption = False
     interruptionDelay += time.time() - startTimes[INTERRUPTION]
    
-    if inBreak:
+    if isPastBreakTime:
+        leff.start(leff.PAST_BREAK)
+    elif inBreak:
         oc.override_light_calib_rgba(c.BREAK_L_B)
-    if inSprint:
+    elif inOverTime:
+        leff.start(leff.ENTERING_OVERTIME)
+    elif inSprint:
         oc.override_light_calib_rgba(c.SPRINT_L_B)
     else:
         oc.override_light_calib_rgba((0,0,0,0))
 
 def just_passed_break_time():
     global isPastBreakTime
+    if isPastBreakTime:
+        return
+
+    leff.start(leff.PAST_BREAK)
     isPastBreakTime = True
 
 def entering_overtime(): 
     global inOverTime
+    if inOverTime:
+        return
+
+    leff.start(leff.ENTERING_OVERTIME)
     inOverTime = True
 
 
@@ -73,15 +85,17 @@ def __display_stats_thread():
 
 
 def end_break():
-    global inBreak
+    global inBreak, isPastBreakTime
     inBreak = False
+    isPastBreakTime = False
     if inInterruption:
         end_interruption()
     reset_delay()
 
 def end_sprint():
-    global inSprint 
+    global inSprint, inOverTime 
     inSprint = False
+    inOverTime = False
     if inInterruption:
         end_interruption()
 
@@ -155,28 +169,25 @@ def update_session_manager():
     if isDislayingStats:
         return # YOU SHALL NOT PASS
 
-    if inSprint:
-        if not inOverTime:
-            if not inInterruption:
-                oc.display_and_format_seconds(objectiveTimes[SPRINT] + interruptionDelay - currentTime)
+    if inInterruption:
+            oc.display_and_format_seconds(currentTime - startTimes[INTERRUPTION])
+            return
 
+    if inSprint:
+        if inOverTime:
+            oc.display_and_format_seconds(currentTime - (objectiveTimes[SPRINT] + interruptionDelay))
+        else:
             if currentTime > (objectiveTimes[SPRINT] + interruptionDelay):
                 entering_overtime()
-        else:
-            if not inInterruption:
-                oc.display_and_format_seconds(currentTime - (objectiveTimes[SPRINT] + interruptionDelay))
+                return
+            oc.display_and_format_seconds(objectiveTimes[SPRINT] + interruptionDelay - currentTime)
 
     if inBreak: 
-        if not isPastBreakTime: 
-            if not inInterruption:
-                oc.display_and_format_seconds(objectiveTimes[BREAK] + interruptionDelay - currentTime)
-
+        if isPastBreakTime: 
+            oc.display_and_format_seconds(currentTime - (objectiveTimes[BREAK] + interruptionDelay))
+        else:
             if currentTime > (objectiveTimes[BREAK] + interruptionDelay):
                 just_passed_break_time()
-        else: 
-            if not inInterruption:
-                oc.display_and_format_seconds(currentTime - (objectiveTimes[SPRINT] + interruptionDelay))
-
-
-    if inInterruption:
-        oc.display_and_format_seconds(currentTime - startTimes[INTERRUPTION])
+                return
+            oc.display_and_format_seconds(objectiveTimes[BREAK] + interruptionDelay - currentTime)
+    
