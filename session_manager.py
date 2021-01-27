@@ -2,6 +2,8 @@ import constant_parameters as c
 import time
 import output_controller as oc # pylint: disable=unused-wildcard-import
 import light_effects as leff
+import bedtime_protocol as bp
+import threading
 
 SESSION = 0
 SPRINT = 1
@@ -28,7 +30,6 @@ def start_session():
     global inSession, startTimes 
     inSession = True
     startTimes[SESSION] = time.time()
-
 
 def start_interruption():
     global inInterruption, startTimes
@@ -110,18 +111,25 @@ def start_sprint(sprintLength):
     leff.start(leff.START_SPRINT)
 
 
-def end_session():
+def __end_session_thread():
     global inSession
+    leff.start(leff.END_SESSION)
+    time.sleep(10)
     inSession = False
     oc.clear_clock()
+    bp.isDisplayingBedtime = False
+    bp.isDisplayingBedtimeCountdown = False
+    bp.isBedtimeSirenProtocolEnabled = False
+
+def end_session():
     if inInterruption:
         end_interruption()
     if inSprint:
         end_sprint()
     if inBreak:
         end_break()
-
-    leff.start(leff.END_SESSION)
+    t = threading.Thread(target=__end_session_thread, args=[])
+    t.start()
 
 
 def update_session_manager():

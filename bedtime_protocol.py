@@ -14,6 +14,7 @@ isCalculatingTime = False
 isTimeToDisplayBedtime = False
 isWithinBedtimeCountdown = False
 isPastBedtime = False
+
 isDisplayingBedtime = False
 isDisplayingBedtimeCountdown = False
 isBedtimeSirenProtocolEnabled = False
