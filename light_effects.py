@@ -140,14 +140,17 @@ def run_light_thread():
         
 
     elif effect == PAST_BEDTIME:
-        intv = 0.18 # s
-        pause = 0.20 
+        intv = 0.18= # s
+        pauseMax = 0.750 
         cooldown = 0.5
         while effect == PAST_BEDTIME:
             set_light_calib_rgba(c.INTERRUPTION_L_B)
-            sleep(intv)
+            sleep(intv/2)
+            turnOff()
+            sleep(intv/2)
+            set_light_calib_rgba(c.INTERRUPTION_L_B)
             fade_off(cooldown)
-            sleep(random())
+            sleep(random() * pauseMax)
 
     elif effect == BEDTIME:
         r,g,b,a = c.BREAK_L_B # pylint: disable=unused-variable
