@@ -151,9 +151,9 @@ def display_int(val):
     if val < 10:
         fourValues = [0,0,0,dig[0]]
     elif val < 100:
-        fourValues = [0,0,dig[1],dig[0]]  
+        fourValues = [0,0,dig[0],dig[1]]  
     elif val < 1000:
-        fourValues = [0,dig[2],dig[1],dig[0]]  
+        fourValues = [0,dig[0],dig[1],dig[2]]  
     else:
         fourValues = dig
     print(fourValues)
