@@ -150,7 +150,7 @@ def run_light_thread():
 
     elif effect == BEDTIME:
         r,g,b,a = c.BREAK_L_B # pylint: disable=unused-variable
-        set_light_calib_rgba((0, 255, 130,0.16))
+        set_light_calib_rgba((0, 255, 130,0.15))
         linfadelen = 5
         fade_linear(oc.calculate_calib_rgba((r,g,b,1)), linfadelen)
         set_light_calib_rgba((r,g,b, 1))
