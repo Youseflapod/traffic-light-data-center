@@ -83,7 +83,7 @@ def update_clock_thread():
             clockDisplay.ShowDoublepoint(True)
             clockDisplay.Show(currentlySetFourNumbers)
 
-        sleeptime = 0.25 - (time.time() - starttime)
+        sleeptime = 0.5 - (time.time() - starttime)
         if sleeptime > 0:
             time.sleep(sleeptime)
 
