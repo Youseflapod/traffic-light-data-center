@@ -45,6 +45,8 @@ def end_interruption():
         oc.override_light_calib_rgba(c.BREAK_L_B)
     if inSprint:
         oc.override_light_calib_rgba(c.SPRINT_L_B)
+    else:
+        oc.override_light_calib_rgba((0,0,0,0))
 
 def just_passed_break_time():
     global isPastBreakTime
@@ -57,11 +59,15 @@ def entering_overtime():
 def end_break():
     global inBreak
     inBreak = False
+    if inInterruption:
+        end_interruption()
     reset_delay()
 
 def end_sprint():
     global inSprint 
     inSprint = False
+    if inInterruption:
+        end_interruption()
     reset_delay()
 
 
