@@ -143,6 +143,7 @@ def display_int(val):
         logging.error("Can't display a number that big!")
         raise Exception("Can't display a number that big")
     fourValues = [ int(val/1000), int(val/100), int(val/10), int(val % 10)]
+    print(fourValues)
     display_four_values(fourValues)
     set_double_point(False)
 
