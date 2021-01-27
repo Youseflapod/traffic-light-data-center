@@ -16,6 +16,7 @@ logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(level
 bedtime_protocol.calculate_sunrise_of_tomorrow_and_bedtime()
 if c.TZ.localize(datetime.datetime.now()) > bedtime_protocol.bedtimeTonight:
     #bedtime_protocol.abort_bedtime_protocol()
+    pass
 
 
 light_effects.turnOff()
