@@ -140,15 +140,15 @@ def run_light_thread():
         
 
     elif effect == PAST_BEDTIME:
-        intv = 0.01 # s
+        intv = 0.1 # s
         pauseMax = 0.7
         cooldown = 0.06
         flashPause = 0.04
         while effect == PAST_BEDTIME:
             for i in range(3):
-                fade_on(c.INTERRUPTION_L_B, cooldown)
+                set_light_calib_rgba(c.INTERRUPTION_L_B)
                 sleep(intv)
-                fade_off(cooldown)
+                turnOff()
                 sleep(flashPause)
             sleep(random() * pauseMax)
 
