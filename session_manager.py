@@ -91,6 +91,7 @@ def start_break(breakLength):
 
 def start_sprint(sprintLength):
     global inSprint, startTimes, objectiveTimes 
+    print("sprint started")
     if inSprint and not inInterruption:
         end_sprint()
     inSprint = True
