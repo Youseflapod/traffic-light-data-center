@@ -44,7 +44,7 @@ DAILY_RECALCULATION_HOUR = 8 # o' clock # MUST be some time after sunrise!
 TZ = pytz.timezone("US/Eastern")
 CITY = LocationInfo("Milton, WV", "United States", "US/Eastern", 38.435060, -82.192510)
 
-MORNING_WAKE_EFFECT_LENGTH = AWAKENING_PERIOD_LENGTH
+MORNING_WAKE_EFFECT_LENGTH = 10 * 60 
 
 SPRINT_L_B = (0, 255, 0, 0.31)
 BREAK_L_B = (255, 225, 0, 0.4)

@@ -12,16 +12,17 @@ import datetime
 
 logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
 
+light_effects.turnOff()
+
 # on boot safety in case I reboot at 11:30 lol
 bedtime_protocol.calculate_sunrise_of_tomorrow_and_bedtime()
 bedtime_protocol.update_bedtime_protocol()
 
 if c.TZ.localize(datetime.datetime.now()) > bedtime_protocol.bedtimeTonight:
     bedtime_protocol.abort_bedtime_protocol()
-    pass
+else:
+    light_effects.start(light_effects.END_SESSION) # boot colors
 
-
-light_effects.turnOff()
 
 
 def main():

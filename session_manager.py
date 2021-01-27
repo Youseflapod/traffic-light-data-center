@@ -17,6 +17,9 @@ inSprint = False
 inOverTime = False
 isPastBreakTime = False
 
+# NOTE: inSprint and inBreak cannot both be true, however, inInterruption is an
+#   aspect of both that can be on or off
+
 isDislayingStats = False
 
 startTimes = [0, 0, 0, 0]
@@ -155,6 +158,9 @@ def __end_session_thread():
     global inSession
     leff.start(leff.END_SESSION)
     time.sleep(10)
+    if inSprint or inBreak:
+        return # a new one was started during shutdown lol
+        
     inSession = False
     oc.clear_clock()
     bp.isDisplayingBedtime = False
