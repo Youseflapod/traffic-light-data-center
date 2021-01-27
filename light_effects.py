@@ -196,6 +196,7 @@ def run_light_thread():
 
     elif effect == DEMO_MODE:
         intv = 0.08 # s
+        oc.display_int(420)
         for i in range(0,10):
             set_light_rgba((255,255,255,1))
             sleep(intv)
@@ -209,6 +210,7 @@ def run_light_thread():
             fade_linear((0,255,0,1),intv)
             fade_linear((0,0,255,1),intv)
         fade_linear((255,0,120,1), 2)
+        oc.clear_clock()
         fade_off(7)
 
     else:
