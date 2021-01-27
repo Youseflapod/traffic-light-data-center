@@ -146,7 +146,10 @@ def run_light_thread():
         flashPause = intv
         while effect == PAST_BEDTIME:
             for i in range(3):
-                set_light_calib_rgba(c.INTERRUPTION_L_B)
+                if i == 1:
+                    set_light_rgba((0,255,0,1))
+                else:
+                    set_light_calib_rgba(c.INTERRUPTION_L_B)
                 sleep(intv)
                 turnOff()
                 sleep(flashPause)
