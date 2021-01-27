@@ -78,9 +78,14 @@ def __display_stats_thread():
     actualLength = time.time() - startTimes[SPRINT]
     percentFocus = 100.0 * (1 - (interruptionDelay / actualLength) )
     reset_delay()
-    oc.display_int(int(round(percentFocus)))
-    time.sleep(c.END_STATS_DISPLAY_LENGTH)
+
+    pause = 0.3
     oc.clear_clock()
+    time.sleep(pause)
+    oc.display_int(int(round(percentFocus)))
+    time.sleep(c.END_STATS_DISPLAY_LENGTH - pause*2)
+    oc.clear_clock()
+    time.sleep(pause)
     isDislayingStats = False
 
 

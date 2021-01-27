@@ -15,7 +15,7 @@ logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(level
 # on boot safety in case I reboot at 11:30 lol
 bedtime_protocol.calculate_sunrise_of_tomorrow_and_bedtime()
 if c.TZ.localize(datetime.datetime.now()) > bedtime_protocol.bedtimeTonight:
-    bedtime_protocol.abort_bedtime_protocol()
+    #bedtime_protocol.abort_bedtime_protocol()
 
 
 light_effects.turnOff()
