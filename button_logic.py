@@ -46,11 +46,13 @@ def update_button_logic():
         
         if bl.greenTimeHeld > c.QUICK_SPRINT_HOLD_TIME and bl.isOneButtonPressed():
                 sm.start_sprint(c.QUICK_SPRINT_LENGTH)
+                disable_all_button_holds_until_all_released()
 
         if sm.inSession:
             
             if bl.yellowTimeHeld > c.LONG_BREAK_HOLD_TIME and bl.isOneButtonPressed():
                 sm.start_break(c.LONG_BREAK_LENGTH)
+                disable_all_button_holds_until_all_released()
             
             
             if bl.greenTimeHeld > c.END_SESSION_HOLD_TIME and bl.yellowTimeHeld > c.END_SESSION_HOLD_TIME:
@@ -61,14 +63,17 @@ def update_button_logic():
 
             if bl.yellowTimeHeld > c.BEDTIME_SHUTDOWN_HOLD_TIME and bl.isOneButtonPressed():
                 bp.bedtime()
+                disable_all_button_holds_until_all_released()
 
             if bl.redTimeHeld > c.ABORT_BEDTIME_PROTOCOL_HOLD_TIME and bl.isOneButtonPressed():
                 bp.abort_bedtime_protocol()
+                disable_all_button_holds_until_all_released()
             
             if bl.greenTimeHeld > c.DEMO_MODE_HOLD_TIME and bl.yellowTimeHeld > c.DEMO_MODE_HOLD_TIME and bl.redTimeHeld > c.DEMO_MODE_HOLD_TIME:
                 leff.start(leff.DEMO_MODE)
                 inDemoMode = True
                 print("DEMO MODE")
+                disable_all_button_holds_until_all_released()
 
             if inDemoMode and bl.isOneButtonPressed():
                 leff.kill_effect()
