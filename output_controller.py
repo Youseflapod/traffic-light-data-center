@@ -142,7 +142,20 @@ def display_int(val):
     if val > 9999:
         logging.error("Can't display a number that big!")
         raise Exception("Can't display a number that big")
-    fourValues = [ int(val/1000), int(val/100), int(val/10), int(val % 10)]
+    elif val < 0:
+        logging.error("Hey, no negative integers!")
+        raise Exception("Negative integers are not allowed!")
+    #fourValues = [ int(val/1000), int(val/100), int(val/10), int(val % 10)]
+    dig = [int(d) for d in str(val)]
+    fourValues = [0,0,0,0]
+    if val < 10:
+        fourValues = [0,0,0,dig[0]]
+    elif val < 100:
+        fourValues = [0,0,dig[1],dig[0]]  
+    elif val < 1000:
+        fourValues = [0,dig[2],dig[1],dig[0]]  
+    else:
+        fourValues = dig
     print(fourValues)
     display_four_values(fourValues)
     set_double_point(False)
