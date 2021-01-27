@@ -35,6 +35,7 @@ isButtonHoldsEnabled = True
 def disable_all_button_holds_until_all_released():
     global isButtonHoldsEnabled
     isButtonHoldsEnabled = False
+    print("button holds disabled")
 
 def update_button_logic():
     global isButtonHoldsEnabled, inDemoMode
