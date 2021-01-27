@@ -157,12 +157,16 @@ def start_sprint(sprintLength):
 def __end_session_thread():
     global inSession
     leff.start(leff.END_SESSION)
-    time.sleep(10)
+    time.sleep(2.5)
+    if not isDislayingStats:
+        oc.clear_clock()
+    time.sleep(5)
+    
     if inSprint or inBreak:
         return # a new one was started during shutdown lol
         
     inSession = False
-    oc.clear_clock()
+    
     bp.isDisplayingBedtime = False
     bp.isDisplayingBedtimeCountdown = False
     bp.isBedtimeSirenProtocolEnabled = False
