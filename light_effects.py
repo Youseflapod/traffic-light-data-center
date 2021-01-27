@@ -196,7 +196,7 @@ def run_light_thread():
 
     elif effect == DEMO_MODE:
         intv = 0.08 # s
-        oc.display_int(420)
+        oc.display_int(9999)
         for i in range(0,10):
             set_light_rgba((255,255,255,1))
             sleep(intv)
