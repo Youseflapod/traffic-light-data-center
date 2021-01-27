@@ -128,9 +128,6 @@ def check_if_time_to_update_calculations():
 def update_time_state_booleans():
     global isTimeToDisplayBedtime, isWithinBedtimeCountdown, isPastBedtime
     now = get_localized_time()
-    if now.day != bedtimeTonight.day:
-        return # waiting until next recalculation
-    # after midnight, isPastBedtime remains on until further update
 
     isTimeToDisplayBedtime = isWithinBedtimeCountdown = isPastBedtime = False
 
