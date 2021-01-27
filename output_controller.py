@@ -156,7 +156,6 @@ def display_int(val):
         fourValues = [0,dig[0],dig[1],dig[2]]  
     else:
         fourValues = dig
-    print(fourValues)
     display_four_values(fourValues)
     set_double_point(False)
 
