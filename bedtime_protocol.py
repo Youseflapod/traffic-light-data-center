@@ -47,7 +47,7 @@ def flash_bedtime_then_sleep():
     currentBrightness = 7
     dim = 2
     oc.display_clock_time(wakeTimeTomorrow)
-    time.sleep(2)
+    time.sleep(4)
     for i in range(3): 
         oc.clockDisplay.SetBrightness(currentBrightness)
         time.sleep(0.8)
@@ -92,18 +92,18 @@ def activate_bedtime_siren_protocol():
 
 def activate_bedtime_countdown():
     global isDisplayingBedtimeCountdown
-    if isDisplayingBedtimeCountdown:
-        return
     dt = bedtimeTonight - get_localized_time()
     oc.display_and_format_seconds(dt.seconds)
+    if isDisplayingBedtimeCountdown:
+        return
     isDisplayingBedtimeCountdown = True
     leff.start(leff.BEDTIME_COUNTDOWN)
     
 def display_bedtime():
     global isDisplayingBedtime
+    oc.display_clock_time(bedtimeTonight)
     if isDisplayingBedtime:
         return
-    oc.display_clock_time(bedtimeTonight)
     isDisplayingBedtime = True
 
 def check_if_time_to_update_calculations():
