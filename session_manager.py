@@ -79,7 +79,7 @@ def __display_stats_thread():
     percentFocus = 100.0 * (1 - (interruptionDelay / actualLength) )
     reset_delay()
 
-    pause = 0.6
+    pause = 1.3
     oc.clear_clock()
     time.sleep(pause)
     oc.display_int(int(round(percentFocus)))
