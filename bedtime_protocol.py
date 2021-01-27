@@ -86,16 +86,19 @@ def abort_bedtime_protocol():
 
 def activate_bedtime_siren_protocol():
     global isBedtimeSirenProtocolEnabled
+    dt = get_localized_time - bedtimeTonight
+    oc.display_and_format_seconds(int(dt.minutes)*60)
+
     if isBedtimeSirenProtocolEnabled:
         return
     isBedtimeSirenProtocolEnabled = True
-
     leff.start(leff.PAST_BEDTIME)
 
 def activate_bedtime_countdown():
     global isDisplayingBedtimeCountdown
     dt = bedtimeTonight - get_localized_time()
     oc.display_and_format_seconds(dt.seconds)
+
     if isDisplayingBedtimeCountdown:
         return
     isDisplayingBedtimeCountdown = True
@@ -104,6 +107,7 @@ def activate_bedtime_countdown():
 def display_bedtime():
     global isDisplayingBedtime
     oc.display_clock_time(bedtimeTonight)
+    
     if isDisplayingBedtime:
         return
     isDisplayingBedtime = True

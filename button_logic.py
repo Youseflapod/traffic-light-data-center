@@ -7,7 +7,6 @@ import light_effects as leff
 inDemoMode = False
 
 def green_button_clicked():
-    print("GREEN BUTTON CLICKED")
     sm.start_sprint(c.STANDARD_SPRINT_LENGTH)
     if sm.inInterruption:
         sm.end_interruption()
@@ -38,7 +37,6 @@ isButtonHoldsEnabled = True
 def disable_all_button_holds_until_all_released():
     global isButtonHoldsEnabled
     isButtonHoldsEnabled = False
-    print("button holds disabled")
 
 def update_button_logic():
     global isButtonHoldsEnabled, inDemoMode

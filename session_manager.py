@@ -17,6 +17,8 @@ inSprint = False
 inOverTime = False
 isPastBreakTime = False
 
+isDislayingStats = False
+
 startTimes = [0, 0, 0, 0]
 objectiveTimes = [0, 0, 0, 0]
 
@@ -57,6 +59,19 @@ def entering_overtime():
     global inOverTime
     inOverTime = True
 
+
+def __display_stats_thread():
+    global isDislayingStats
+    isDislayingStats = True
+    actualLength = time.time() - startTimes[SPRINT]
+    percentFocus = 100.0 * (1 - (interruptionDelay / actualLength) )
+    reset_delay()
+    oc.display_int(int(round(percentFocus)))
+    time.sleep(c.END_STATS_DISPLAY_LENGTH)
+    oc.clear_clock()
+    isDislayingStats = False
+
+
 def end_break():
     global inBreak
     inBreak = False
@@ -69,7 +84,9 @@ def end_sprint():
     inSprint = False
     if inInterruption:
         end_interruption()
-    reset_delay()
+
+    t = threading.Thread(target=__display_stats_thread, args=[])
+    t.start()
 
 
 def start_break(breakLength):
@@ -92,7 +109,6 @@ def start_break(breakLength):
 
 def start_sprint(sprintLength):
     global inSprint, startTimes, objectiveTimes 
-    print("sprint started")
     if inSprint and not inInterruption:
         end_sprint()
     inSprint = True
@@ -105,6 +121,7 @@ def start_sprint(sprintLength):
     if inInterruption:
         end_interruption()
     else: 
+        time.sleep(0.0085) # in case thread taking time to boot
         startTimes[SPRINT] = time.time()
         objectiveTimes[SPRINT] = startTimes[SPRINT] + sprintLength
 
@@ -134,6 +151,9 @@ def end_session():
 
 def update_session_manager():
     currentTime = time.time()
+
+    if isDislayingStats:
+        return # YOU SHALL NOT PASS
 
     if inSprint:
         if not inOverTime:

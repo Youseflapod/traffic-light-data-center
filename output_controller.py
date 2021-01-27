@@ -105,7 +105,6 @@ def display_four_values(four_value_array):
     shouldDisplayBeClear = False
     currentlySetFourNumbers = four_value_array
     if isDisplayActuallyClear: # immediate reaction time
-        clockDisplay.ShowDoublepoint(True)
         clockDisplay.Show(four_value_array)
 
 def display_clock_time(anyTime):
@@ -115,6 +114,7 @@ def display_clock_time(anyTime):
         hour -= 12
     fourValues = [ int(hour / 10), hour % 10, int(minute / 10), minute % 10 ]
     display_four_values(fourValues)
+    clockDisplay.ShowDoublepoint(True)
 
 def display_and_format_seconds(seconds):
     fourValues = [0,0,0,0]
@@ -130,6 +130,15 @@ def display_and_format_seconds(seconds):
         disp_sec = seconds - 60 * minutes
         fourValues = [ int(minutes / 10), int(minutes % 10), int(disp_sec / 10), int(disp_sec % 10) ]
     display_four_values(fourValues)
+    clockDisplay.ShowDoublepoint(True)
+
+def display_int(val):
+    if val > 9999:
+        logging.error("Can't display a number that big!")
+        raise Exception("Can't display a number that big")
+    fourValues = [ int(val/1000), int(val/100), int(val/10), int(val % 10)]
+    display_four_values(fourValues)
+    clockDisplay.ShowDoublepoint(False)
 
 def update_output_controller():
     pass
