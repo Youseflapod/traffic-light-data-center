@@ -34,4 +34,22 @@ pi.set_PWM_range(B, 1250)
 pi.set_PWM_frequency(B,160)
 pi.set_PWM_dutycycle(B, 1)
 
-python3 /home/pi/traffic-light-data-center/main.py
+python3 /home/pi/traffic-light-data-center/main.py &
+sudo python3 /home/pi/traffic-light-data-center/main.py > /home/pi/traffic.log 2>&1 &
+
+sudo bash -c 'python3 /home/pi/traffic-light-data-center/main.py > /home/pi/traffic.log 2>&1' &
+
+#sudo bash -c '/usr/bin/python3.7 /home/pi/traffic-light-data-center/main.py > /home/pi/traffic.log 2>&1' &
+
+[Unit]
+Description=Traffic Light Service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python3.7 /home/pi/traffic-light-data-center/main.py > /home/pi/traffic.log 2>&1
+
+[Install]
+WantedBy=multi-user.target
+
+
