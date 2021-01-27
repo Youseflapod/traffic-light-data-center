@@ -18,14 +18,17 @@ def green_button_released(timeHeld):
     print(f'Green Button released: timeheld: {timeHeld}')
     if not too_long(timeHeld):
         bl.green_button_clicked()
+    greenTimeHeld = 0
 
 def yellow_button_released(timeHeld):
     if not too_long(timeHeld):
         bl.yellow_button_clicked()
+    yellowTimeHeld = 0
 
 def red_button_released(timeHeld):
     if not too_long(timeHeld):
         bl.red_button_clicked()
+    redTimeHeld = 0
 
 
 def gpio_green_button_pressed(channel):
