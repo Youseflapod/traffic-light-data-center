@@ -26,9 +26,12 @@ def yellow_button_just_pressed():
     pass
 
 def red_button_just_pressed():
-    pass
+    global inDemoMode
     if sm.inSession:
         sm.start_interruption() # because there is no hold function during session, so more immediate
+    if inDemoMode and bl.isOneButtonPressed():
+        leff.kill_effect()
+        inDemoMode = False      
 
 isButtonHoldsEnabled = True
 
@@ -75,8 +78,4 @@ def update_button_logic():
                 inDemoMode = True
                 print("DEMO MODE")
                 disable_all_button_holds_until_all_released()
-
-            if inDemoMode and bl.isOneButtonPressed():
-                leff.kill_effect()
-                inDemoMode = False
 
