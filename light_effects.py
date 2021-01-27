@@ -83,7 +83,7 @@ def fade_on(endRGBA,length):
         
 def run_light_thread():
     from output_controller import set_light_rgba, set_light_calib_rgba
-    from random import random
+    from random import random, uniform
     global isLightEffectRunning
     effect = currentEffect
 
@@ -146,7 +146,7 @@ def run_light_thread():
         while effect == PAST_BEDTIME:
             for i in range(3):
                 if i == 1:
-                    set_light_rgba((0,0,255,random()))
+                    set_light_rgba((0,0,255,uniform(0.5,1)))
                 else:
                     set_light_calib_rgba(c.INTERRUPTION_L_B)
                 sleep(intv)
