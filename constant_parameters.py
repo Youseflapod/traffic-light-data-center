@@ -1,5 +1,5 @@
 from astral import LocationInfo
-import datetime
+from datetime import datetime
 import sys
 import time
 import pytz
@@ -20,11 +20,18 @@ STANDARD_SPRINT_LENGTH = 25 * 60 + 1
 QUICK_SPRINT_LENGTH = 15 * 60 + 1
 
 FLICKERING_TOLERANCE = 0.1 # seconds // for button flickering
-
+START_SESSION_TOLERANCE = 0.05 # seconds // so that sesion doesn't randomly start lol
 
 
 BEDTIME_COUNTDOWN_LENGTH = 20 * 60 + 1
 DISPLAY_BEDTIME_LENGTH = 60 * 60
+
+MORNING_WAKE_EFFECT_LENGTH = 10 * 60 
+MORNING_WAKE_PERIOD_MAX_LENGTH = 20 * 60
+MORNING_CLOCK_TIME_LENGTH = 60 * 60
+
+BEDTIME_ALARM_LEVEL_1_LENGTH = 15 * 60
+BEDTIME_ALARM_LEVEL_2_LENGTH = 15 * 60
 
 TIME_BEFORE_SUNRISE = 15 * 60
 FAJR_PRAYER_LENGTH = 8 * 60
@@ -39,12 +46,11 @@ CALCULATED_BEDTIME_BEFORE_SUNRISE = \
     CALCULATED_WAKE_TIME_BEFORE_SUNRISE \
     + REQUIRED_AMOUNT_OF_SLEEP + BEDTIME_CLOSING_PRAYERS_LENGTH
 
-DAILY_RECALCULATION_HOUR = 8 # o' clock # MUST be some time after sunrise!
+DAILY_RECALCULATION_TIME = datetime(8,0) # o' clock # MUST be some time after sunrise!
+AUTO_ABORT_TIME = datetime(1, 30) # this late, there's no point in bothering me...
 
 TZ = pytz.timezone("US/Eastern")
 CITY = LocationInfo("Milton, WV", "United States", "US/Eastern", 38.435060, -82.192510)
-
-MORNING_WAKE_EFFECT_LENGTH = 10 * 60 
 
 SPRINT_L_B = (0, 255, 0, 0.31)
 BREAK_L_B = (255, 225, 0, 0.4)
@@ -52,5 +58,6 @@ INTERRUPTION_L_B = (255, 0, 0, 1)
 MORNING_L_B = (255, 250, 209,1)
 
 CLOCK_BRIGHTNESS = 7 # 0 min, max 7
+MORNING_CLOCK_BRIGHTNESS = 1
 
 DT = 1.0 / 50

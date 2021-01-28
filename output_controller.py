@@ -8,6 +8,7 @@ import tm1637
 import time
 import datetime
 import threading
+import bedtime_protocol as bp
 
 pi = pigpio.pi()
 
@@ -117,7 +118,9 @@ def display_four_values(four_value_array):
     if isDisplayActuallyClear: # immediate reaction time
         clockDisplay.Show(four_value_array)
 
-def display_clock_time(anyTime):
+def display_clock_time(anyTime, fixBrightness = True):
+    if fixBrightness:
+        set_clock_brightness(c.CLOCK_BRIGHTNESS)
     hour = anyTime.hour
     minute = anyTime.minute
     if hour > 12:
@@ -126,7 +129,14 @@ def display_clock_time(anyTime):
     display_four_values(fourValues)
     set_double_point(True)
 
-def display_and_format_seconds(seconds):
+def display_current_time(fixBrightness = True):
+    if fixBrightness:
+        set_clock_brightness(c.CLOCK_BRIGHTNESS)
+    display_clock_time(bp.get_localized_time().time(), fixBrightness= fixBrightness)
+
+def display_and_format_seconds(seconds, fixBrightness = True):
+    if fixBrightness:
+        set_clock_brightness(c.CLOCK_BRIGHTNESS)
     fourValues = [0,0,0,0]
     if seconds < 0:
         logging.error("Hey, no negative seconds!")
@@ -142,7 +152,15 @@ def display_and_format_seconds(seconds):
     display_four_values(fourValues)
     set_double_point(True)
 
-def display_int(val):
+def display_and_format_seconds_into_minutes(seconds, fixBrightness = True):
+    if fixBrightness:
+        set_clock_brightness(c.CLOCK_BRIGHTNESS)
+    minutes = int(seconds/60)
+    display_and_format_seconds(minutes*60)
+
+def display_int(val, fixBrightness = True):
+    if fixBrightness:
+        set_clock_brightness(c.CLOCK_BRIGHTNESS)
     if val > 9999:
         logging.error("Can't display a number that big!")
         raise Exception("Can't display a number that big")

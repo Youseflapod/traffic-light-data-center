@@ -17,7 +17,7 @@ def too_long(timeHeld):
 def green_button_released(timeHeld):
     global greenTimeHeld
     if not too_long(timeHeld):
-        bl.green_button_clicked()
+        bl.green_button_clicked(timeHeld)
     greenTimeHeld = 0
 
 def yellow_button_released(timeHeld):

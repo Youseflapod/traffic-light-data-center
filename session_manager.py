@@ -133,16 +133,21 @@ def start_break(breakLength):
     leff.start(leff.START_BREAK)
     
 
-def start_sprint(sprintLength):
+def start_sprint(sprintLength, buttonTimeHeld):
     global inSprint, startTimes, objectiveTimes 
     if inSprint and not inInterruption:
         end_sprint()
-    inSprint = True
 
     if not inSession:
-        start_session()
+        if buttonTimeHeld > (c.FLICKERING_TOLERANCE + c.START_SESSION_TOLERANCE):
+            start_session()
+        else:
+            return # no E&M interference starting midnight sessions lol
+
     if inBreak:
         end_break()
+
+    inSprint = True
 
     if inInterruption:
         end_interruption()

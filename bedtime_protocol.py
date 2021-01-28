@@ -14,14 +14,18 @@ isCalculatingTime = False
 isTimeToDisplayBedtime = False
 isWithinBedtimeCountdown = False
 isPastBedtime = False
+isWakeUpTime = False
+isMorningClockTime = False
 
 isDisplayingBedtime = False
 isDisplayingBedtimeCountdown = False
 isBedtimeSirenProtocolEnabled = False
+isDisplayingWakeUp = False
 
 sunriseTomorrow = datetime.datetime.now()
 bedtimeTonight = datetime.datetime.now()
 wakeTimeTomorrow = datetime.datetime.now()
+wakeClockTimeTomorrow = datetime.datetime.now()
 
 showBedtimeTime = datetime.datetime.now()
 showBedtimeCountdownTime = datetime.datetime.now()
@@ -93,7 +97,7 @@ def abort_bedtime_protocol():
 def activate_bedtime_siren_protocol():
     global isBedtimeSirenProtocolEnabled
     dt = get_localized_time() - bedtimeTonight
-    oc.display_and_format_seconds(int(dt.seconds/60.0))
+    oc.display_and_format_seconds_into_minutes(dt.seconds)
 
     if isBedtimeSirenProtocolEnabled:
         return
@@ -118,6 +122,16 @@ def display_bedtime():
         return
     isDisplayingBedtime = True
 
+
+def display_wake_up():
+    global isDisplayingWakeUp
+    dt = get_localized_time() - wakeTimeTomorrow
+    oc.display_and_format_seconds(dt)
+
+    if isDisplayingWakeUp:
+        return
+    isDisplayingWakeUp = True
+
 def check_if_time_to_update_calculations():
     global isCalculatingTime
     start = get_localized_time().replace(hour=c.DAILY_RECALCULATION_HOUR)
@@ -131,10 +145,14 @@ def check_if_time_to_update_calculations():
         isCalculatingTime = False
 
 def update_time_state_booleans():
-    global isTimeToDisplayBedtime, isWithinBedtimeCountdown, isPastBedtime
+    global isTimeToDisplayBedtime, isWithinBedtimeCountdown, isPastBedtime, isWakeUpTime, isMorningClockTime
     now = get_localized_time()
 
-    isTimeToDisplayBedtime = isWithinBedtimeCountdown = isPastBedtime = False
+    isTimeToDisplayBedtime = isWithinBedtimeCountdown = isPastBedtime = False 
+
+    wakeTimeEnd = wakeTimeTomorrow + timedelta(seconds=c.MORNING_WAKE_EFFECT_LENGTH)
+    if wakeTimeTomorrow < now < wakeTimeEnd:
+        isWakeUpTime = True
 
     if showBedtimeTime < now < showBedtimeCountdownTime:
         isTimeToDisplayBedtime = True
@@ -152,7 +170,7 @@ def should_bedtime_protocol_continue():
         return True
 
 def calculate_sunrise_of_tomorrow_and_bedtime():
-    global hasPerformedDailyRecalculation, sunriseTomorrow, bedtimeTonight, wakeTimeTomorrow
+    global hasPerformedDailyRecalculation, sunriseTomorrow, bedtimeTonight, wakeTimeTomorrow,wakeClockTimeTomorrow
     global showBedtimeTime, showBedtimeCountdownTime
     tomorrow = get_localized_time() + timedelta(days=1)
     if get_localized_time() < get_localized_time().replace(hour=c.DAILY_RECALCULATION_HOUR):
@@ -162,14 +180,13 @@ def calculate_sunrise_of_tomorrow_and_bedtime():
     sunriseTomorrow = s["sunrise"]
     bedtimeTonight = sunriseTomorrow - timedelta(seconds=c.CALCULATED_BEDTIME_BEFORE_SUNRISE)
     wakeTimeTomorrow = sunriseTomorrow - timedelta(seconds=c.CALCULATED_WAKE_TIME_BEFORE_SUNRISE)
+    wakeClockTimeTomorrow = wakeTimeTomorrow - timedelta(seconds=c.MORNING_CLOCK_TIME_LENGTH)
     showBedtimeCountdownTime = bedtimeTonight - timedelta(seconds=c.BEDTIME_COUNTDOWN_LENGTH)
     showBedtimeTime = bedtimeTonight - timedelta(seconds=c.DISPLAY_BEDTIME_LENGTH)
     print(bedtimeTonight)
     print(wakeTimeTomorrow)
-    print(showBedtimeCountdownTime)
-    print(showBedtimeTime)
 
-def check_if_wake_up_time():
+'''def check_if_wake_up_time():
     global isWakeUpTime
     start = wakeTimeTomorrow
     end = start + timedelta(seconds=5)
@@ -179,12 +196,18 @@ def check_if_wake_up_time():
         isWakeUpTime = True
         leff.start(leff.MORNING)
     else:
-        isWakeUpTime = False
+        isWakeUpTime = False'''
 
 def update_bedtime_protocol():
     update_time_state_booleans()
 
     if not session_manager.inSession:
+        if isWakeUpTime:
+            display_wake_up()
+        elif isMorningClockTime:
+            oc.set_clock_brightness(c.MORNING_CLOCK_BRIGHTNESS)
+            oc.display_current_time(fixBrightness=False)
+
         if should_bedtime_protocol_continue():
             if isPastBedtime:
                 activate_bedtime_siren_protocol()

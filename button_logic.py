@@ -6,8 +6,8 @@ import light_effects as leff
 
 inDemoMode = False
 
-def green_button_clicked():
-    sm.start_sprint(c.STANDARD_SPRINT_LENGTH)
+def green_button_clicked(timeHeld):
+    sm.start_sprint(c.STANDARD_SPRINT_LENGTH, timeHeld)
     if sm.inInterruption:
         sm.end_interruption()
 
