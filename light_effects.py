@@ -1,6 +1,7 @@
 import constant_parameters as c 
 import output_controller as oc
 import logging
+import bedtime_protocol as bp
 from killable_thread import thread_with_trace
 import numpy as np
 from time import sleep
@@ -145,10 +146,16 @@ def run_light_thread():
         intv = 0.2 # s
         pauseMax = 1.4
         flashPause = intv
+        level1End = bp.bedtimeTonight + bp.timedelta(seconds=c.BEDTIME_ALARM_LEVEL_1_LENGTH)
+        level2End = level1End + bp.timedelta(seconds=c.BEDTIME_ALARM_LEVEL_2_LENGTH)
+
         while effect == PAST_BEDTIME:
             for i in range(3):
-                if i == 1:
-                    set_light_rgba((0,0,255,1))
+                if i == 1 and bp.get_localized_time() > level1End:
+                        if bp.get_localized_time < level2End:
+                            set_light_rgba((50,0,255,0.4))
+                        else:
+                            set_light_rgba((0,0,255,1))
                 else:
                     set_light_calib_rgba(c.INTERRUPTION_L_B)
                 sleep(intv)
