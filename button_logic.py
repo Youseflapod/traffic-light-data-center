@@ -7,6 +7,8 @@ import light_effects as leff
 inDemoMode = False
 
 def green_button_clicked(timeHeld):
+    if bp.isInWakeUpPeriod:
+        return
     sm.start_sprint(c.STANDARD_SPRINT_LENGTH, timeHeld)
     if sm.inInterruption:
         sm.end_interruption()
@@ -19,7 +21,8 @@ def red_button_clicked():
     pass
 
 def green_button_just_pressed():
-    pass
+    if bp.isInWakeUpPeriod:
+        bp.woke_up()
 
 def yellow_button_just_pressed():
     pass
